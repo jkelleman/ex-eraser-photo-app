@@ -57,7 +57,7 @@ test('places a demo order end to end', async () => {
     storeNum: stores[0].storeNum,
     promiseTime: stores[0].promiseTime,
     productId,
-    photos: [{ id: 'beach', qty: 2 }],
+    photos: [{ id: 'friends', qty: 2 }],
     termsAccepted: true,
   });
   assert.equal(orderResponse.status, 201);

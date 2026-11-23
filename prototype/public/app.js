@@ -142,6 +142,18 @@ function updateOrder() {
     : 'No photos chosen';
 }
 
+// Photo credits (the CC BY licenses ask for credit and a note that the photo was changed)
+
+function renderCredits() {
+  const seen = new Map();
+  for (const photo of state.photos) {
+    if (photo.credit && !seen.has(photo.credit.sourceUrl)) seen.set(photo.credit.sourceUrl, photo.credit);
+  }
+  $('credits-list').innerHTML = [...seen.values()]
+    .map((c) => `<li><a href="${esc(c.sourceUrl)}">Photo</a> by ${esc(c.name)}, <a href="${esc(c.licenseUrl)}">${esc(c.license)}</a>. Edited with this app's AI pipeline.</li>`)
+    .join('');
+}
+
 // Step 1: sizes and photos
 
 function sizeShape(productSize) {
@@ -214,6 +226,7 @@ function renderPhotos() {
         <input type="checkbox" id="${esc(checkboxId)}" aria-label="Print ${esc(photo.title)}" aria-describedby="${esc(checkboxId)}-info">
         <span class="print-frame">
           <img src="photos/${esc(photo.file)}" alt="">
+          <span class="before-badge" hidden>Before</span>
           <span class="check" aria-hidden="true">${CHECK_SVG}</span>
         </span>
         <span class="print-meta">
@@ -224,6 +237,7 @@ function renderPhotos() {
         <span class="print-action" aria-hidden="true">Add to order</span>
         <span class="visually-hidden" id="${esc(checkboxId)}-info">${esc(treatmentLabel(photo))}. ${esc(photo.date)}. Photo ${index + 1} of ${printable.length}.</span>
       </label>
+      ${photo.before ? `<button type="button" class="before-toggle" aria-pressed="false">Show before</button>` : ''}
       <div class="stepper" hidden>
         <span class="stepper-label" id="${esc(checkboxId)}-copies">Copies</span>
         <button type="button" data-step="-1" aria-label="Fewer copies of ${esc(photo.title)}">−</button>
@@ -236,6 +250,18 @@ function renderPhotos() {
     const output = item.querySelector('output');
     const [fewer, more] = item.querySelectorAll('.stepper button');
     const action = item.querySelector('.print-action');
+    const toggle = item.querySelector('.before-toggle');
+    if (toggle) {
+      const img = item.querySelector('.print-frame img');
+      const badge = item.querySelector('.before-badge');
+      toggle.addEventListener('click', () => {
+        const showingBefore = toggle.getAttribute('aria-pressed') === 'true';
+        img.src = `photos/${showingBefore ? photo.file : photo.before}`;
+        badge.hidden = showingBefore;
+        toggle.setAttribute('aria-pressed', String(!showingBefore));
+        toggle.textContent = showingBefore ? 'Show before' : 'Show after';
+      });
+    }
 
     const setQty = (qty) => {
       const value = Math.min(MAX_QTY, Math.max(1, qty));
@@ -509,6 +535,7 @@ async function init() {
     state.products = products;
     renderSizes();
     renderPhotos();
+    renderCredits();
     updateOrder();
   } catch {
     $('photos-error').textContent = "The demo couldn't load. Check that the server is running, then refresh.";

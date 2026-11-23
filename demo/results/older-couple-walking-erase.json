@@ -1,0 +1,20 @@
+{
+  "source": "older-couple-walking.jpg",
+  "mode": "erase",
+  "person": 2,
+  "people_found": 2,
+  "digital_source_type": "http://cv.iptc.org/newscodes/digitalsourcetype/compositeWithTrainedAlgorithmicMedia",
+  "edited_at": "2026-11-23T19:20:15+00:00",
+  "touch_ups": [
+    [
+      1085,
+      590,
+      1245,
+      805
+    ]
+  ],
+  "models": [
+    "yolov8n-seg (Ultralytics)",
+    "big-lama (LaMa)"
+  ]
+}

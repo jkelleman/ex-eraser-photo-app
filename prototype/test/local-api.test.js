@@ -33,7 +33,7 @@ test('browser-only mode places a demo order end to end', async () => {
       storeNum: stores[0].storeNum,
       promiseTime: stores[0].promiseTime,
       productId: products[0].productId,
-      photos: [{ id: 'beach', qty: 1 }],
+      photos: [{ id: 'friends', qty: 1 }],
       termsAccepted: true,
     },
   });
@@ -46,7 +46,7 @@ test('browser-only mode places a demo order end to end', async () => {
 test('browser-only mode applies the same order checks as the server', async () => {
   const api = createLocalApi({ loadPhotos });
   await assert.rejects(
-    () => api('api/orders', { method: 'POST', body: { photos: [{ id: 'snow', qty: 1 }], termsAccepted: false } }),
-    (error) => error.status === 400 && error.details.some((e) => e.includes('Snow day')),
+    () => api('api/orders', { method: 'POST', body: { photos: [{ id: 'faded-1', qty: 1 }], termsAccepted: false } }),
+    (error) => error.status === 400 && error.details.some((e) => e.includes('Reception')),
   );
 });

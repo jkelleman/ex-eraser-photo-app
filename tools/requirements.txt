@@ -1,0 +1,8 @@
+# Person-removal proof of concept (tools/erase_person.py)
+# Install these, then: pip install --no-deps simple-lama-inpainting
+# (its own requirements pin an old Pillow that doesn't build on recent Python)
+ultralytics>=8.3
+opencv-python-headless>=4.9
+pillow>=11
+numpy>=1.26
+torch>=2.2

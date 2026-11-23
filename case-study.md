@@ -39,6 +39,10 @@ The agent sorts photos into batches of 20 and suggests a mode for each one, with
 - **Shared libraries.** Edits in an iCloud Shared Photo Library sync to everyone, so the app edits a private copy instead.
 - **PhotoKit limits.** How Fade works and how deleted photos are recovered are still open questions to test.
 
+## Proof that it works
+
+An open-source pipeline (YOLOv8 to find people, LaMa to fill in the background) removed one person from real, openly licensed photos of people of different ages, ethnicities and abilities. It worked well on people standing apart from others, and crops left no trace. Close-ups left a blur, which backs up the design rule to suggest a soft silhouette there. Things people held, like a hat, sometimes fell outside the outline, which shows the app needs a touch-up tool. [See the results](demo/README.md).
+
 ## Quality and accessibility
 
 - **Evaluating the agent.** Human reviewers and an LLM judge grade the agent's suggestions against one rubric. The judge is calibrated against human grades before it's trusted, and the children rule must pass 100% of the time before any release.

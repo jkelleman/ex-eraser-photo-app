@@ -18,6 +18,14 @@ The user chooses a person. The app finds their photos with on-device face matchi
 
 Originals are always kept, every edit is labeled in the photo's metadata, and face data never leaves the phone. When the user is done, they can print a few favorites for same-day pickup at Walgreens.
 
+## See it work
+
+The core idea works today. An open-source pipeline found and removed one person from real, openly licensed photos of people of different ages, ethnicities and abilities:
+
+![A friend on the right erased from a photo of three friends](demo/proof/friends-street-erase.jpg)
+
+See all five results, what worked and what didn't, in the [proof page](demo/README.md).
+
 ## Try the demo
 
 There are three ways to try the print step demo, from easiest to most hands-on. All of them run in demo mode, so no real orders are placed.
@@ -45,6 +53,10 @@ There are three ways to try the print step demo, from easiest to most hands-on. 
 - [Error and empty states](docs/09-error-states.md)
 - [Accessibility pass](docs/10-accessibility.md)
 - [Print step](docs/12-print-step.md)
+
+### Proof
+- [Person removal on real photos](demo/README.md): before, outline and after for five edits
+- [Pipeline script](tools/erase_person.py) and [photo credits](demo/CREDITS.md)
 
 ### Prototype
 - [Print step demo](prototype/README.md): a working web demo that sends cleaned-up photos to Walgreens, with a mock mode that needs no credentials

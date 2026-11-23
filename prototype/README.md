@@ -8,7 +8,7 @@ The demo is a small web app. The real product would be a native iPhone app (see 
 | --- | --- | --- | --- |
 | ![Print a few favorites](screenshots/1-photos.png) | ![Choose a store](screenshots/2-store.png) | ![Your details](screenshots/3-details.png) | ![Your prints are on their way](screenshots/4-done.png) |
 
-The demo photos are illustrations with no people in them. It also works on phones ([screenshot](screenshots/mobile.png)) and in dark mode ([screenshot](screenshots/4-done-dark.png)).
+The photos are real, openly licensed photos edited by the [person-removal pipeline](../demo/README.md). Each print has a "Show before" button to compare with the original, and credits are listed at the bottom of the page. It also works on phones ([screenshot](screenshots/mobile.png)) and in dark mode ([screenshot](screenshots/4-done-dark.png)).
 
 ## Try it
 
@@ -107,7 +107,7 @@ Check status          ─────►   GET /api/orders/:id/status ───�
 | `public/local-api.js` | Browser-only mode: answers the same API calls with demo data when there's no server |
 | `Start Demo.command` | Double-click launcher for Mac |
 | `scripts/build-static.js` | Builds the browser-only version into `dist/` |
-| `data/photos.json`, `photos/` | Demo photos (illustrations, no people) and their edit modes |
+| `data/photos.json`, `photos/` | Real edited photos, their originals, edit modes and credits |
 
 ## Design notes
 

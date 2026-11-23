@@ -243,7 +243,8 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 @media (prefers-reduced-motion: no-preference) {
   .print-frame { transition: transform 0.18s ease, box-shadow 0.18s ease; }
 }
-.print-frame img { display: block; width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+.print-frame img { display: block; width: 100%; height: auto; }
+.prints { align-items: start; }
 .print-card:has(input:checked) .print-frame { transform: translateY(-4px) rotate(-0.6deg); box-shadow: var(--print-shadow-lift); outline: 3px solid var(--plum); outline-offset: 0; }
 .print-card:has(input:focus-visible) .print-frame { outline: 3px solid var(--focus); outline-offset: 4px; }
 
@@ -262,6 +263,38 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .check svg { width: 20px; height: 20px; opacity: 0; }
 .print-card:has(input:checked) .check { background: #5a3e8a; border-color: #5a3e8a; }
 .print-card:has(input:checked) .check svg { opacity: 1; }
+
+.before-badge {
+  position: absolute;
+  left: 18px;
+  top: 18px;
+  padding: 0.2rem 0.65rem;
+  border-radius: 999px;
+  background: rgba(27, 35, 51, 0.85);
+  color: #fff;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+.before-toggle {
+  margin-top: 0.5rem;
+  min-height: 44px;
+  padding: 0.4rem 0.9rem;
+  border-radius: 10px;
+  border: 2px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  font: inherit;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+.before-toggle[aria-pressed="true"] { border-color: var(--plum); background: var(--plum-soft); color: var(--plum-strong); }
+
+.credits { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--ink-quiet); font-size: 1rem; max-width: 70ch; }
+.credits h2 { font-size: 1.125rem; color: var(--ink); margin: 0 0 0.5rem; }
+.credits a { color: var(--plum); }
+.credits ul { padding-left: 1.25rem; margin: 0.5rem 0 0; }
+.credits li { margin-bottom: 0.25rem; }
 
 /* The edit each photo got: shown in words, with an icon, under the print. */
 .treatment {
@@ -511,6 +544,7 @@ input[aria-invalid="true"] { border-color: var(--error) !important; }
   .order-title { font-family: var(--font-body); font-size: 1rem; font-weight: 600; margin: 0; color: var(--ink-quiet); }
   .order-total { margin: 0; padding: 0; border: 0; gap: 0.75rem; }
   .order-total span { display: none; }
+  .shell { padding-bottom: 8rem; }
   .order-brief { display: block; margin: 0; font-weight: 700; margin-right: auto; }
   .order-title { display: none; }
   .steps .step-label { display: none; }

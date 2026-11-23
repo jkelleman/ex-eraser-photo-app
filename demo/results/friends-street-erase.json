@@ -1,0 +1,12 @@
+{
+  "source": "friends-street.jpg",
+  "mode": "erase",
+  "person": 4,
+  "people_found": 4,
+  "digital_source_type": "http://cv.iptc.org/newscodes/digitalsourcetype/compositeWithTrainedAlgorithmicMedia",
+  "edited_at": "2026-11-23T19:13:11+00:00",
+  "models": [
+    "yolov8n-seg (Ultralytics)",
+    "big-lama (LaMa)"
+  ]
+}
