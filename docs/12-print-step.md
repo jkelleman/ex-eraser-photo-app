@@ -11,6 +11,8 @@ After finishing a batch, the user can print a few favorites and pick them up at 
 
 ## Copy
 
+*Demo mode label (header):* "Demo: no real orders are placed"
+
 ### Step 1: Photos
 
 **Heading:** "Print a few favorites"
@@ -19,11 +21,13 @@ After finishing a batch, the user can print a few favorites and pick them up at 
 
 *Size picker legend:* "Print size"
 
-*Each photo:* "Print this photo" · "Copies"
+*Each photo:* "Add to order", which changes to "In your order" once chosen. A "Copies" control with − and + buttons appears under chosen photos.
 
-*Faded note:* "2 faded photos aren't listed here, since faded photos haven't been edited. You can change them in the vault first."
+*Faded note:* "2 faded photos aren't shown here, since faded photos haven't been edited. You can change them in the vault first."
 
-*Privacy line:* "Your privacy: only the photos you choose are sent to Walgreens for printing. Face data never leaves your phone."
+*Privacy line:* "Your privacy. Only the photos you choose are sent to Walgreens for printing. Face data never leaves your phone."
+
+*Order summary:* "Your order" with photos, prints, pickup, ready time and subtotal. On phones: "4 prints, 5×7 in" and the subtotal. When empty: "No photos chosen."
 
 **Button:** Choose a store
 
@@ -39,7 +43,7 @@ After finishing a batch, the user can print a few favorites and pick them up at 
 
 *While searching:* "Finding stores near you…"
 
-*Results:* "Found 3 stores." Each store shows its address, distance and ready time.
+*Results:* "Found 3 stores that can print your order." Each store shows its address, distance and ready time, such as "Ready: Today, 3:30 PM."
 
 *Store temporarily unavailable:* ready time shows "Within 48 hours."
 

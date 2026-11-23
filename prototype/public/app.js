@@ -3,6 +3,7 @@
 
 const DEMO_LOCATION = { latitude: 42.3601, longitude: -71.0589 }; // Boston
 const MAX_QTY = 20;
+const STEPS = ['photos', 'store', 'details', 'done'];
 
 const state = {
   photos: [],
@@ -19,8 +20,27 @@ const $ = (id) => document.getElementById(id);
 // Escapes text from the server or Walgreens before it goes into markup.
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-// Set when there's no server: the page answers its own API calls with demo
-// data (see local-api.js), so it works from a plain hosted link.
+const money = (value) => `$${Number(value || 0).toFixed(2)}`;
+const sizeLabel = (size) => `${String(size ?? '').replace('x', '×')} in`;
+
+// "11-23-2026 3:30 PM" -> "Today, 3:30 PM" / "Tomorrow, 9:00 AM" / "Fri, Nov 27, 3:30 PM".
+// Walgreens' "no promise time" value is already "Within 48 hours".
+function friendlyPickup(label) {
+  const match = /^(\d{2})-(\d{2})-(\d{4}) (\d{1,2}):(\d{2}) (AM|PM)$/.exec(label || '');
+  if (!match) return label;
+  const [, mm, dd, yyyy, h, min, ampm] = match;
+  const date = new Date(Number(yyyy), Number(mm) - 1, Number(dd));
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const days = Math.round((date - today) / 86400000);
+  const time = `${Number(h)}:${min} ${ampm}`;
+  if (days === 0) return `Today, ${time}`;
+  if (days === 1) return `Tomorrow, ${time}`;
+  return `${date.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })}, ${time}`;
+}
+
+// Talking to the server, or answering locally when there isn't one.
+
 let localApi = null;
 
 async function connect() {
@@ -53,17 +73,26 @@ async function api(path, options = {}) {
   return data;
 }
 
+// Steps
+
 function showStep(name) {
+  const index = STEPS.indexOf(name);
   for (const section of document.querySelectorAll('.step')) {
     section.hidden = section.id !== `step-${name}`;
   }
   for (const item of document.querySelectorAll('[data-step-indicator]')) {
-    if (item.dataset.stepIndicator === name) item.setAttribute('aria-current', 'step');
-    else item.removeAttribute('aria-current');
+    const i = STEPS.indexOf(item.dataset.stepIndicator);
+    const current = i === index;
+    item.toggleAttribute('aria-current', current);
+    if (current) item.setAttribute('aria-current', 'step');
+    item.classList.toggle('complete', i < index);
+    item.querySelector('.step-state').textContent = i < index ? ', completed' : current ? ', current step' : '';
   }
   const heading = $(`${name}-heading`);
   heading.focus();
+  window.scrollTo({ top: 0 });
   document.title = `${heading.textContent} · Ex-Eraser Photo App print demo`;
+  updateOrder();
 }
 
 function selectedProduct() {
@@ -78,26 +107,73 @@ function totalPrints() {
   return cartItems().reduce((sum, item) => sum + item.qty, 0);
 }
 
-// Step 1: photos and size
+function subtotal() {
+  const product = selectedProduct();
+  return product ? totalPrints() * Number(product.productPrice) : 0;
+}
+
+// Order summary (sidebar on wide screens, bottom bar on phones)
+
+function updateOrder() {
+  const product = selectedProduct();
+  const prints = totalPrints();
+  const photosById = new Map(state.photos.map((photo) => [photo.id, photo]));
+
+  $('order-thumbs').innerHTML = cartItems()
+    .map(({ id, qty }) => {
+      const photo = photosById.get(id);
+      return `<li><img src="photos/${esc(photo.file)}" alt=""><span>${qty}</span></li>`;
+    })
+    .join('');
+
+  const lines = [
+    ['Photos', state.selected.size ? String(state.selected.size) : 'None yet'],
+    ['Prints', prints ? `${prints} × ${esc(sizeLabel(product?.productSize))}` : 'None yet'],
+  ];
+  if (state.store) {
+    lines.push(['Pickup', `${esc(state.store.street)}`]);
+    lines.push(['Ready', esc(friendlyPickup(state.store.pickupLabel))]);
+  }
+  $('order-lines').innerHTML = lines.map(([dt, dd]) => `<dt>${dt}</dt><dd>${dd}</dd>`).join('');
+  $('order-subtotal').textContent = money(subtotal());
+  $('order-brief').textContent = prints
+    ? `${prints} ${prints === 1 ? 'print' : 'prints'}, ${sizeLabel(product?.productSize)}`
+    : 'No photos chosen';
+}
+
+// Step 1: sizes and photos
+
+function sizeShape(productSize) {
+  const [a, b] = String(productSize).split('x').map(Number);
+  if (!a || !b) return '';
+  const scale = 44 / Math.max(a, b, 10);
+  return `<span style="width:${Math.round(b * scale)}px;height:${Math.round(a * scale)}px"></span>`;
+}
 
 function renderSizes() {
-  const container = $('sizes');
-  container.innerHTML = '';
-  state.products.forEach((product, index) => {
-    const id = `size-${product.productId}`;
-    const wrapper = document.createElement('div');
-    wrapper.className = 'option';
-    wrapper.innerHTML = `
-      <input type="radio" name="size" id="${esc(id)}" value="${esc(product.productId)}" ${index === 0 ? 'checked' : ''}>
-      <label for="${esc(id)}">${esc(product.productSize)} · $${Number(product.productPrice).toFixed(2)} each</label>`;
-    container.append(wrapper);
-  });
+  $('sizes').innerHTML = state.products
+    .map((product, index) => {
+      const id = `size-${product.productId}`;
+      return `
+        <label class="size" for="${esc(id)}">
+          <input type="radio" name="size" id="${esc(id)}" value="${esc(product.productId)}" ${index === 0 ? 'checked' : ''}>
+          <span class="size-shape" aria-hidden="true">${sizeShape(product.productSize)}</span>
+          <span>
+            <span class="size-name">${esc(sizeLabel(product.productSize))}</span>
+            <span class="size-price">${money(product.productPrice)} each</span>
+          </span>
+        </label>`;
+    })
+    .join('');
   state.productId = state.products[0]?.productId || null;
 }
 
 $('sizes').addEventListener('change', (event) => {
   state.productId = event.target.value;
+  updateOrder();
 });
+
+const CHECK_SVG = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 function renderPhotos() {
   const grid = $('photo-grid');
@@ -106,49 +182,62 @@ function renderPhotos() {
 
   printable.forEach((photo, index) => {
     const checkboxId = `photo-${photo.id}`;
-    const qtyId = `qty-${photo.id}`;
     const item = document.createElement('li');
-    item.className = 'photo-card';
     item.innerHTML = `
-      <img src="photos/${esc(photo.file)}" alt="${esc(photo.title)}, ${esc(photo.date)}. ${esc(photo.mode)}.">
-      <div class="photo-body">
-        <p class="photo-title">${esc(photo.title)}</p>
-        <p class="photo-meta">${esc(photo.date)}</p>
-        <span class="mode-chip">${esc(photo.mode)}</span>
-        <div class="photo-select">
-          <input type="checkbox" id="${checkboxId}" aria-describedby="${checkboxId}-pos">
-          <label for="${checkboxId}">Print this photo</label>
-          <span id="${checkboxId}-pos" hidden>Photo ${index + 1} of ${printable.length}</span>
-        </div>
-        <div class="qty" hidden>
-          <label for="${qtyId}">Copies</label>
-          <input type="number" id="${qtyId}" min="1" max="${MAX_QTY}" value="1" inputmode="numeric">
-        </div>
+      <label class="print-card" for="${esc(checkboxId)}">
+        <input type="checkbox" id="${esc(checkboxId)}" aria-label="Print ${esc(photo.title)}" aria-describedby="${esc(checkboxId)}-info">
+        <span class="print-frame">
+          <img src="photos/${esc(photo.file)}" alt="">
+          <span class="check" aria-hidden="true">${CHECK_SVG}</span>
+          <span class="mode-tag" aria-hidden="true">${esc(photo.mode)}</span>
+        </span>
+        <span class="print-meta">
+          <span class="print-title">${esc(photo.title)}</span>
+          <span class="print-date">${esc(photo.date)}</span>
+        </span>
+        <span class="print-action" aria-hidden="true">Add to order</span>
+        <span class="visually-hidden" id="${esc(checkboxId)}-info">${esc(photo.mode)} photo, ${esc(photo.date)}. Photo ${index + 1} of ${printable.length}.</span>
+      </label>
+      <div class="stepper" hidden>
+        <span class="stepper-label" id="${esc(checkboxId)}-copies">Copies</span>
+        <button type="button" data-step="-1" aria-label="Fewer copies of ${esc(photo.title)}">−</button>
+        <output aria-live="polite" aria-labelledby="${esc(checkboxId)}-copies">1</output>
+        <button type="button" data-step="1" aria-label="More copies of ${esc(photo.title)}">+</button>
       </div>`;
 
-    const checkbox = item.querySelector('input[type="checkbox"]');
-    const qtyRow = item.querySelector('.qty');
-    const qtyInput = item.querySelector('input[type="number"]');
+    const checkbox = item.querySelector('input');
+    const stepper = item.querySelector('.stepper');
+    const output = item.querySelector('output');
+    const [fewer, more] = item.querySelectorAll('.stepper button');
+    const action = item.querySelector('.print-action');
+
+    const setQty = (qty) => {
+      const value = Math.min(MAX_QTY, Math.max(1, qty));
+      output.textContent = value;
+      fewer.disabled = value <= 1;
+      more.disabled = value >= MAX_QTY;
+      if (checkbox.checked) state.selected.set(photo.id, value);
+      updateOrder();
+    };
 
     checkbox.addEventListener('change', () => {
       $('photos-error').textContent = '';
-      qtyRow.hidden = !checkbox.checked;
-      item.classList.toggle('selected', checkbox.checked);
-      if (checkbox.checked) state.selected.set(photo.id, Number(qtyInput.value) || 1);
+      stepper.hidden = !checkbox.checked;
+      action.textContent = checkbox.checked ? 'In your order' : 'Add to order';
+      if (checkbox.checked) state.selected.set(photo.id, Number(output.textContent) || 1);
       else state.selected.delete(photo.id);
+      setQty(Number(output.textContent) || 1);
     });
-    qtyInput.addEventListener('change', () => {
-      const qty = Math.min(MAX_QTY, Math.max(1, Math.round(Number(qtyInput.value) || 1)));
-      qtyInput.value = qty;
-      if (checkbox.checked) state.selected.set(photo.id, qty);
-    });
+    fewer.addEventListener('click', () => setQty(Number(output.textContent) - 1));
+    more.addEventListener('click', () => setQty(Number(output.textContent) + 1));
+    fewer.disabled = true;
 
     grid.append(item);
   });
 
   const fadedCount = state.photos.length - printable.length;
   $('faded-note').textContent = fadedCount
-    ? `${fadedCount} faded ${fadedCount === 1 ? "photo isn't" : "photos aren't"} listed here, since faded photos haven't been edited. You can change them in the vault first.`
+    ? `${fadedCount} faded ${fadedCount === 1 ? "photo isn't" : "photos aren't"} shown here, since faded photos haven't been edited. You can change them in the vault first.`
     : '';
 }
 
@@ -169,15 +258,12 @@ async function findStores(location) {
   try {
     const { stores } = await api('api/stores', {
       method: 'POST',
-      body: {
-        ...location,
-        items: [{ productId: state.productId, qty: totalPrints() }],
-      },
+      body: { ...location, items: [{ productId: state.productId, qty: totalPrints() }] },
     });
     state.stores = stores;
     renderStores();
     $('store-status').textContent = stores.length
-      ? `Found ${stores.length} ${stores.length === 1 ? 'store' : 'stores'}.`
+      ? `Found ${stores.length} ${stores.length === 1 ? 'store' : 'stores'} that can print your order.`
       : "I couldn't find a store that can print this order nearby. Try another location.";
   } catch (error) {
     $('store-status').textContent = '';
@@ -186,27 +272,31 @@ async function findStores(location) {
 }
 
 function renderStores() {
-  const container = $('stores');
-  container.innerHTML = '';
   state.store = null;
-  state.stores.forEach((store) => {
-    const id = `store-${store.storeNum}`;
-    const option = document.createElement('div');
-    option.className = 'store-option';
-    option.innerHTML = `
-      <input type="radio" name="store" id="${esc(id)}" value="${esc(store.storeNum)}" aria-describedby="${esc(id)}-details">
-      <div>
-        <label for="${esc(id)}">${esc(store.street)}, ${esc(store.city)}</label>
-        <p class="hint" id="${esc(id)}-details">${esc(store.distance)} ${esc(store.distanceUnit)} away · Ready: ${esc(store.pickupLabel)}</p>
-      </div>`;
-    container.append(option);
-  });
+  $('stores').innerHTML = state.stores
+    .map((store) => {
+      const id = `store-${store.storeNum}`;
+      const ready = friendlyPickup(store.pickupLabel);
+      const later = ready === 'Within 48 hours';
+      return `
+        <label class="store" for="${esc(id)}">
+          <input type="radio" name="store" id="${esc(id)}" value="${esc(store.storeNum)}">
+          <span>
+            <span class="store-address">${esc(store.street)}</span>
+            <span class="store-meta">${esc(store.city)}, ${esc(store.state)} ${esc(store.zip)}. ${esc(store.distance)} ${esc(store.distanceUnit)} away.</span>
+          </span>
+          <span class="store-ready${later ? ' later' : ''}">Ready: ${esc(ready)}</span>
+        </label>`;
+    })
+    .join('');
   $('store-fieldset').hidden = state.stores.length === 0;
+  updateOrder();
 }
 
 $('stores').addEventListener('change', (event) => {
   state.store = state.stores.find((store) => store.storeNum === event.target.value) || null;
   $('store-error').textContent = '';
+  updateOrder();
 });
 
 $('use-demo-location').addEventListener('click', () => findStores(DEMO_LOCATION));
@@ -242,19 +332,22 @@ $('store-next').addEventListener('click', () => {
 function renderSummary() {
   const product = selectedProduct();
   const prints = totalPrints();
-  const subtotal = product ? prints * Number(product.productPrice) : 0;
   $('summary').innerHTML = `
-    <dt>Prints</dt><dd>${prints} × ${esc(product?.productSize)}</dd>
+    <dt>Prints</dt><dd>${prints} × ${esc(sizeLabel(product?.productSize))}</dd>
     <dt>Photos</dt><dd>${state.selected.size}</dd>
     <dt>Pickup</dt><dd>${esc(state.store.street)}, ${esc(state.store.city)}</dd>
-    <dt>Ready</dt><dd>${esc(state.store.pickupLabel)}</dd>
-    <dt>Subtotal</dt><dd>$${subtotal.toFixed(2)}</dd>`;
+    <dt>Ready</dt><dd>${esc(friendlyPickup(state.store.pickupLabel))}</dd>
+    <dt>Subtotal</dt><dd>${money(subtotal())}</dd>`;
+}
+
+function isValid(input) {
+  return input.type === 'checkbox' ? input.checked : input.checkValidity() && input.value.trim() !== '';
 }
 
 function showFieldErrors(form) {
   let firstInvalid = null;
   for (const input of form.querySelectorAll('input[required]')) {
-    const valid = input.type === 'checkbox' ? input.checked : input.checkValidity() && input.value.trim() !== '';
+    const valid = isValid(input);
     input.setAttribute('aria-invalid', String(!valid));
     if (!valid && !firstInvalid) firstInvalid = input;
   }
@@ -263,10 +356,9 @@ function showFieldErrors(form) {
 
 // Clear a field's error state as soon as the person fixes it.
 $('details-form').addEventListener('input', (event) => {
-  if (event.target.getAttribute('aria-invalid') === 'true') {
-    const input = event.target;
-    const valid = input.type === 'checkbox' ? input.checked : input.checkValidity() && input.value.trim() !== '';
-    if (valid) input.setAttribute('aria-invalid', 'false');
+  const input = event.target;
+  if (input.getAttribute('aria-invalid') === 'true' && isValid(input)) {
+    input.setAttribute('aria-invalid', 'false');
     if (!document.querySelector('#details-form [aria-invalid="true"]')) $('details-error').textContent = '';
   }
 });
@@ -309,10 +401,11 @@ $('details-form').addEventListener('submit', async (event) => {
       },
     });
     state.orderId = order.vendorOrderId;
-    $('done-pickup').textContent = `Pick them up at the Walgreens at ${state.store.street}, ${state.store.city}. Ready: ${order.pickupLabel}.`;
+    $('done-pickup').textContent = `Pick them up at the Walgreens at ${state.store.street}, ${state.store.city}. Ready: ${friendlyPickup(order.pickupLabel)}.`;
     $('done-order').textContent = `Order number ${order.vendorOrderId}. Walgreens will email you when they're ready.`;
     $('details-status').textContent = '';
     $('order-status').textContent = '';
+    renderTrack(0);
     showStep('done');
   } catch (error) {
     $('details-status').textContent = '';
@@ -328,10 +421,21 @@ $('details-form').addEventListener('submit', async (event) => {
 
 // Step 4: done
 
+function renderTrack(code) {
+  for (const item of document.querySelectorAll('#status-track li')) {
+    const stepCode = Number(item.dataset.code);
+    item.classList.toggle('done', stepCode < code);
+    item.classList.toggle('current', stepCode === code || (code === 2 && stepCode === 1));
+    if (item.classList.contains('current')) item.setAttribute('aria-current', 'step');
+    else item.removeAttribute('aria-current');
+  }
+}
+
 $('check-status').addEventListener('click', async () => {
   $('order-status').textContent = 'Checking…';
   try {
     const status = await api(`api/orders/${encodeURIComponent(state.orderId)}/status`);
+    renderTrack(Number(status.code));
     $('order-status').textContent = `Status: ${status.label}.`;
   } catch (error) {
     $('order-status').textContent = error.message;
@@ -359,12 +463,17 @@ for (const button of document.querySelectorAll('[data-back]')) {
 // Start
 
 async function init() {
+  const brief = document.createElement('p');
+  brief.id = 'order-brief';
+  brief.className = 'order-brief';
+  $('order-heading').after(brief);
+
   try {
     const config = await connect();
     const [{ photos }, { products }] = await Promise.all([api('api/photos'), api('api/products')]);
     if (config.mode === 'mock') {
       const banner = $('mode-banner');
-      banner.textContent = 'Demo mode: stores and prices are made up, and no real orders are placed.';
+      banner.textContent = 'Demo: no real orders are placed';
       banner.hidden = false;
     }
     // Hosted pages can't ask for location, and demo stores don't depend on it.
@@ -373,7 +482,8 @@ async function init() {
     state.products = products;
     renderSizes();
     renderPhotos();
-  } catch (error) {
+    updateOrder();
+  } catch {
     $('photos-error').textContent = "The demo couldn't load. Check that the server is running, then refresh.";
   }
 }

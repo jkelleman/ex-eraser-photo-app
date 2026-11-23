@@ -26,6 +26,8 @@ const CONTENT_TYPES = {
   '.json': 'application/json; charset=utf-8',
   '.jpg': 'image/jpeg',
   '.svg': 'image/svg+xml',
+  '.woff2': 'font/woff2',
+  '.png': 'image/png',
 };
 
 export function createClientFromEnv(env = process.env) {

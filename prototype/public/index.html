@@ -10,124 +10,166 @@
 <body>
   <a class="skip-link" href="#main">Skip to main content</a>
 
-  <header class="app-header">
-    <p class="app-name">Ex-Eraser Photo App</p>
-    <p id="mode-banner" class="mode-banner" hidden></p>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <span class="brand">
+        <svg class="brand-mark" viewBox="0 0 40 40" aria-hidden="true">
+          <rect x="4" y="9" width="24" height="24" rx="2" transform="rotate(-8 16 21)" fill="var(--mist-deep)"/>
+          <rect x="11" y="6" width="25" height="25" rx="2" fill="var(--paper)" stroke="var(--plum)" stroke-width="2"/>
+          <path d="M14 26l6-7 4 4 3-3 6 6z" fill="var(--plum)"/>
+          <circle cx="29" cy="12" r="2.6" fill="var(--apricot)"/>
+        </svg>
+        <span class="brand-name">Ex-Eraser <span class="brand-sub">Photo App</span></span>
+      </span>
+      <p id="mode-banner" class="demo-pill" hidden></p>
+    </div>
   </header>
 
-  <main id="main">
-    <ol class="progress" aria-label="Steps">
-      <li data-step-indicator="photos" aria-current="step">Photos</li>
-      <li data-step-indicator="store">Store</li>
-      <li data-step-indicator="details">Details</li>
-      <li data-step-indicator="done">Done</li>
-    </ol>
+  <main id="main" class="shell">
+    <nav class="steps-nav" aria-label="Order progress">
+      <ol class="steps">
+        <li data-step-indicator="photos" aria-current="step"><span class="step-num" aria-hidden="true">1</span><span class="step-label">Photos</span><span class="visually-hidden step-state"></span></li>
+        <li data-step-indicator="store"><span class="step-num" aria-hidden="true">2</span><span class="step-label">Store</span><span class="visually-hidden step-state"></span></li>
+        <li data-step-indicator="details"><span class="step-num" aria-hidden="true">3</span><span class="step-label">Details</span><span class="visually-hidden step-state"></span></li>
+        <li data-step-indicator="done"><span class="step-num" aria-hidden="true">4</span><span class="step-label">Done</span><span class="visually-hidden step-state"></span></li>
+      </ol>
+    </nav>
 
-    <!-- Step 1: choose photos -->
-    <section id="step-photos" class="step" aria-labelledby="photos-heading">
-      <h1 id="photos-heading" tabindex="-1">Print a few favorites</h1>
-      <p>These are the photos you've finished. Choose any you'd like to hold in your hands.</p>
+    <div class="layout">
+      <div class="content">
 
-      <fieldset class="size-picker">
-        <legend>Print size</legend>
-        <div id="sizes" class="size-options"></div>
-      </fieldset>
+        <!-- Step 1: choose photos -->
+        <section id="step-photos" class="step" aria-labelledby="photos-heading">
+          <h1 id="photos-heading" tabindex="-1">Print a few favorites</h1>
+          <p class="lead">These are the photos you've finished. Choose any you'd like to hold in your hands.</p>
 
-      <ul id="photo-grid" class="photo-grid" aria-label="Edited photos"></ul>
+          <fieldset class="sizes">
+            <legend>Print size</legend>
+            <div id="sizes" class="size-options"></div>
+          </fieldset>
 
-      <p class="note" id="faded-note"></p>
+          <h2 class="section-title">Your finished photos</h2>
+          <ul id="photo-grid" class="prints" aria-label="Finished photos"></ul>
 
-      <p class="privacy">
-        <strong>Your privacy:</strong> only the photos you choose are sent to Walgreens for printing. Face data never leaves your phone.
-      </p>
+          <p class="note" id="faded-note"></p>
 
-      <div class="actions">
-        <button type="button" id="photos-next" class="primary">Choose a store</button>
-      </div>
-      <p id="photos-error" class="error" role="alert"></p>
-    </section>
-
-    <!-- Step 2: choose store -->
-    <section id="step-store" class="step" aria-labelledby="store-heading" hidden>
-      <h1 id="store-heading" tabindex="-1">Choose a store</h1>
-      <p>Pick the Walgreens where you'd like to pick up your prints.</p>
-
-      <div class="actions">
-        <button type="button" id="use-location">Use my location</button>
-        <button type="button" id="use-demo-location">Use a demo location (Boston)</button>
-      </div>
-      <p id="store-status" class="status" role="status" aria-live="polite"></p>
-
-      <fieldset id="store-fieldset" class="store-list" hidden>
-        <legend>Stores near you</legend>
-        <div id="stores"></div>
-      </fieldset>
-
-      <div class="actions">
-        <button type="button" data-back="photos">Back</button>
-        <button type="button" id="store-next" class="primary">Add your details</button>
-      </div>
-      <p id="store-error" class="error" role="alert"></p>
-    </section>
-
-    <!-- Step 3: details and terms -->
-    <section id="step-details" class="step" aria-labelledby="details-heading" hidden>
-      <h1 id="details-heading" tabindex="-1">Your details</h1>
-      <p>Walgreens uses these to let you know when your prints are ready.</p>
-
-      <form id="details-form" novalidate>
-        <div class="field-row">
-          <div class="field">
-            <label for="first-name">First name</label>
-            <input id="first-name" name="firstName" autocomplete="given-name" required>
+          <div class="reassure">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l8 3v6c0 5-3.4 9.4-8 11-4.6-1.6-8-6-8-11V5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M8.5 12l2.5 2.5 4.5-5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <p><strong>Your privacy.</strong> Only the photos you choose are sent to Walgreens for printing. Face data never leaves your phone.</p>
           </div>
-          <div class="field">
-            <label for="last-name">Last name</label>
-            <input id="last-name" name="lastName" autocomplete="family-name" required>
+
+          <div class="actions">
+            <button type="button" id="photos-next" class="btn btn-primary">Choose a store</button>
           </div>
-        </div>
-        <div class="field">
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" required>
-        </div>
-        <div class="field">
-          <label for="phone">Phone</label>
-          <input id="phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="phone-hint">
-          <p id="phone-hint" class="hint">Include your area code.</p>
-        </div>
+          <p id="photos-error" class="error" role="alert"></p>
+        </section>
 
-        <h2>Review your order</h2>
-        <dl id="summary" class="summary"></dl>
-        <p class="hint">Walgreens confirms tax and the final price.</p>
+        <!-- Step 2: choose store -->
+        <section id="step-store" class="step" aria-labelledby="store-heading" hidden>
+          <h1 id="store-heading" tabindex="-1">Choose a store</h1>
+          <p class="lead">Pick the Walgreens where you'd like to pick up your prints.</p>
 
-        <!-- Walgreens requires a control the customer acts on for every order.
-             Replace this label with the exact Terms of Use and Online Privacy &
-             Security Policy copy Walgreens provides. -->
-        <div class="terms">
-          <input id="terms" name="termsAccepted" type="checkbox" required>
-          <label for="terms">I agree to the Walgreens Terms of Use and Online Privacy &amp; Security Policy.</label>
-        </div>
+          <div class="actions actions-tight">
+            <button type="button" id="use-location" class="btn btn-secondary">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-7-6.2-7-11.5A7 7 0 0119 9.5C19 14.8 12 21 12 21z" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="9.5" r="2.5" fill="currentColor"/></svg>
+              Use my location
+            </button>
+            <button type="button" id="use-demo-location" class="btn btn-secondary">Use a demo location (Boston)</button>
+          </div>
+          <p id="store-status" class="status" role="status" aria-live="polite"></p>
 
-        <div class="actions">
-          <button type="button" data-back="store">Back</button>
-          <button type="submit" id="submit-order" class="primary">Send to Walgreens</button>
-        </div>
-        <p id="details-status" class="status" role="status" aria-live="polite"></p>
-        <div id="details-error" class="error" role="alert"></div>
-      </form>
-    </section>
+          <fieldset id="store-fieldset" class="stores" hidden>
+            <legend>Stores near you</legend>
+            <div id="stores" class="store-options"></div>
+          </fieldset>
 
-    <!-- Step 4: confirmation -->
-    <section id="step-done" class="step" aria-labelledby="done-heading" hidden>
-      <h1 id="done-heading" tabindex="-1">Your prints are on their way</h1>
-      <p id="done-pickup"></p>
-      <p id="done-order"></p>
-      <div class="actions">
-        <button type="button" id="check-status" class="primary">Check status</button>
-        <button type="button" id="start-over">Print more photos</button>
+          <div class="actions">
+            <button type="button" data-back="photos" class="btn btn-quiet">Back</button>
+            <button type="button" id="store-next" class="btn btn-primary">Add your details</button>
+          </div>
+          <p id="store-error" class="error" role="alert"></p>
+        </section>
+
+        <!-- Step 3: details and terms -->
+        <section id="step-details" class="step" aria-labelledby="details-heading" hidden>
+          <h1 id="details-heading" tabindex="-1">Your details</h1>
+          <p class="lead">Walgreens uses these to let you know when your prints are ready.</p>
+
+          <form id="details-form" class="form" novalidate>
+            <div class="field">
+              <label for="first-name">First name</label>
+              <input id="first-name" name="firstName" autocomplete="given-name" required>
+            </div>
+            <div class="field">
+              <label for="last-name">Last name</label>
+              <input id="last-name" name="lastName" autocomplete="family-name" required>
+            </div>
+            <div class="field">
+              <label for="email">Email</label>
+              <input id="email" name="email" type="email" autocomplete="email" required>
+            </div>
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="phone-hint">
+              <p id="phone-hint" class="hint">Include your area code.</p>
+            </div>
+
+            <div class="review">
+              <h2 class="section-title">Review your order</h2>
+              <dl id="summary" class="review-list"></dl>
+              <p class="hint">Walgreens confirms tax and the final price.</p>
+            </div>
+
+            <!-- Walgreens requires a control the customer acts on for every order.
+                 Replace this label with the exact Terms of Use and Online Privacy &
+                 Security Policy copy Walgreens provides. -->
+            <div class="terms">
+              <input id="terms" name="termsAccepted" type="checkbox" required>
+              <label for="terms">I agree to the Walgreens Terms of Use and Online Privacy &amp; Security Policy.</label>
+            </div>
+
+            <div class="actions">
+              <button type="button" data-back="store" class="btn btn-quiet">Back</button>
+              <button type="submit" id="submit-order" class="btn btn-primary">Send to Walgreens</button>
+            </div>
+            <p id="details-status" class="status" role="status" aria-live="polite"></p>
+            <div id="details-error" class="error" role="alert"></div>
+          </form>
+        </section>
+
+        <!-- Step 4: confirmation -->
+        <section id="step-done" class="step" aria-labelledby="done-heading" hidden>
+          <svg class="done-mark" viewBox="0 0 72 72" aria-hidden="true">
+            <circle cx="36" cy="36" r="33" fill="var(--plum-soft)"/>
+            <path class="done-check" d="M22 37l9 9 19-20" fill="none" stroke="var(--plum)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <h1 id="done-heading" tabindex="-1">Your prints are on their way</h1>
+          <p id="done-pickup" class="lead"></p>
+          <p id="done-order" class="note"></p>
+
+          <h2 class="section-title">Order status</h2>
+          <ol id="status-track" class="track" aria-label="Order status">
+            <li data-code="0">Sending to the store</li>
+            <li data-code="1">Downloading at the store</li>
+            <li data-code="3">Ready for pickup</li>
+          </ol>
+
+          <div class="actions">
+            <button type="button" id="check-status" class="btn btn-primary">Check status</button>
+            <button type="button" id="start-over" class="btn btn-secondary">Print more photos</button>
+          </div>
+          <p id="order-status" class="status" role="status" aria-live="polite"></p>
+        </section>
       </div>
-      <p id="order-status" class="status" role="status" aria-live="polite"></p>
-    </section>
+
+      <aside class="order" aria-labelledby="order-heading">
+        <h2 id="order-heading" class="order-title">Your order</h2>
+        <ul id="order-thumbs" class="order-thumbs" aria-hidden="true"></ul>
+        <dl id="order-lines" class="order-lines"></dl>
+        <p class="order-total"><span>Subtotal</span> <strong id="order-subtotal">$0.00</strong></p>
+        <p class="order-note">Walgreens confirms tax and the final price.</p>
+      </aside>
+    </div>
   </main>
 
   <script type="module" src="app.js"></script>

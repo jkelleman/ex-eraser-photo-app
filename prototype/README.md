@@ -8,7 +8,7 @@ The demo is a small web app. The real product would be a native iPhone app (see 
 | --- | --- | --- | --- |
 | ![Print a few favorites](screenshots/1-photos.png) | ![Choose a store](screenshots/2-store.png) | ![Your details](screenshots/3-details.png) | ![Your prints are on their way](screenshots/4-done.png) |
 
-The demo photos are illustrations with no people in them. Dark mode is supported too ([screenshot](screenshots/4-done-dark.png)).
+The demo photos are illustrations with no people in them. It also works on phones ([screenshot](screenshots/mobile.png)) and in dark mode ([screenshot](screenshots/4-done-dark.png)).
 
 ## Try it
 
@@ -110,6 +110,19 @@ Check status          ─────►   GET /api/orders/:id/status ───�
 | `data/photos.json`, `photos/` | Demo photos (illustrations, no people) and their edit modes |
 
 ## Design notes
+
+### Audience: Millennials and Boomers
+
+The design aims to be easy for older readers and as polished as a modern photo-printing app.
+
+- **Readable first.** Body text is 18px in Atkinson Hyperlegible, a typeface made for readers with low vision. Headings use Fraunces. Both fonts are bundled in `public/fonts/` under the SIL Open Font License, so nothing loads from outside.
+- **Photos look like real prints.** Each photo has a white border and a paper shadow. A chosen print lifts, gets a check mark and shows a copies control with large − and + buttons.
+- **Price is always visible.** An order summary stays beside the page on wide screens and becomes a bar at the bottom on phones.
+- **Words beside every icon**, numbered steps, 48px tap targets and plain labels like "Add to order".
+- **Friendly pickup times.** Walgreens' "11-23-2026 3:30 PM" becomes "Today, 3:30 PM".
+- **Colors:** mist background (#EDF1F7), white paper, navy text (#1B2333), plum for actions (#5A3E8A) and apricot (#F2A86F) for small accents. Dark mode uses the same idea at night.
+
+### Behavior
 
 - **Faded photos can't be printed.** Fade doesn't edit a photo, so the person is still in it. Only cropped, erased and replaced photos are offered, and the page says why.
 - **Uploads happen only at the end.** Photos are sent to Walgreens only after the person reviews the order and agrees to the terms, and only the photos they chose.
