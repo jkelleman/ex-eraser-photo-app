@@ -33,6 +33,7 @@ There are three ways to try the print step demo, from easiest to most hands-on. 
 - [Voice and journey](docs/02-voice-and-journey.md): voice principles and the onboarding flow diagram
 - [Partner integrations](docs/11-partner-integrations.md): connecting to print services like CVS, Walgreens and Shutterfly
 - [Packaging as an app](docs/13-packaging-as-an-app.md): steps from the web demo to the App Store
+- [Sharing a beta with TestFlight](docs/14-testflight.md): how to give testers a one-tap install link, for later
 
 ### Conversation design and copy
 - [Onboarding](docs/03-onboarding.md): the eight-step script and the "How does it work?" explainer
@@ -61,5 +62,6 @@ There are three ways to try the print step demo, from easiest to most hands-on. 
 - [x] A working demo of the print step
 - [ ] A clickable prototype of onboarding and triage
 - [ ] Outreach to CVS and Shutterfly, using the demo and the case study
+- [ ] A TestFlight beta with a public link ([how](docs/14-testflight.md))
 - [ ] A usability test plan for the check-in and triage copy
 - [ ] App Store listing copy and the App Privacy details

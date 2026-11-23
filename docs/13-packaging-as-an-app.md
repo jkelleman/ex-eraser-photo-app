@@ -40,7 +40,7 @@ The web demo stays useful as a partner demo and a design reference. The flows, c
 
 - **Simulator.** Xcode includes iPhone simulators for quick checks.
 - **Your own iPhone.** Connect it to your Mac and run the app on it.
-- **TestFlight.** Apple's beta testing service lets you invite testers by email. It needs the developer membership.
+- **TestFlight.** Apple's beta testing service lets testers install the app from an email invitation or a public link. It needs the developer membership. See [Sharing a beta with TestFlight](14-testflight.md).
 - **Accessibility.** Test with VoiceOver, the largest Dynamic Type sizes and Reduce Motion, using the checklist in the [accessibility pass](10-accessibility.md).
 - **The agent.** Run the [eval plan](../agent/eval-plan.md) before each release.
 
