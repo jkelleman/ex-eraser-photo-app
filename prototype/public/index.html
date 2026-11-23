@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Print a few favorites · [App] print demo</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to main content</a>
+
+  <header class="app-header">
+    <p class="app-name">[App]</p>
+    <p id="mode-banner" class="mode-banner" hidden></p>
+  </header>
+
+  <main id="main">
+    <ol class="progress" aria-label="Steps">
+      <li data-step-indicator="photos" aria-current="step">Photos</li>
+      <li data-step-indicator="store">Store</li>
+      <li data-step-indicator="details">Details</li>
+      <li data-step-indicator="done">Done</li>
+    </ol>
+
+    <!-- Step 1: choose photos -->
+    <section id="step-photos" class="step" aria-labelledby="photos-heading">
+      <h1 id="photos-heading" tabindex="-1">Print a few favorites</h1>
+      <p>These are the photos you've finished. Choose any you'd like to hold in your hands.</p>
+
+      <fieldset class="size-picker">
+        <legend>Print size</legend>
+        <div id="sizes" class="size-options"></div>
+      </fieldset>
+
+      <ul id="photo-grid" class="photo-grid" aria-label="Edited photos"></ul>
+
+      <p class="note" id="faded-note"></p>
+
+      <p class="privacy">
+        <strong>Your privacy:</strong> only the photos you choose are sent to Walgreens for printing. Face data never leaves your phone.
+      </p>
+
+      <div class="actions">
+        <button type="button" id="photos-next" class="primary">Choose a store</button>
+      </div>
+      <p id="photos-error" class="error" role="alert"></p>
+    </section>
+
+    <!-- Step 2: choose store -->
+    <section id="step-store" class="step" aria-labelledby="store-heading" hidden>
+      <h1 id="store-heading" tabindex="-1">Choose a store</h1>
+      <p>Pick the Walgreens where you'd like to pick up your prints.</p>
+
+      <div class="actions">
+        <button type="button" id="use-location">Use my location</button>
+        <button type="button" id="use-demo-location">Use a demo location (Boston)</button>
+      </div>
+      <p id="store-status" class="status" role="status" aria-live="polite"></p>
+
+      <fieldset id="store-fieldset" class="store-list" hidden>
+        <legend>Stores near you</legend>
+        <div id="stores"></div>
+      </fieldset>
+
+      <div class="actions">
+        <button type="button" data-back="photos">Back</button>
+        <button type="button" id="store-next" class="primary">Add your details</button>
+      </div>
+      <p id="store-error" class="error" role="alert"></p>
+    </section>
+
+    <!-- Step 3: details and terms -->
+    <section id="step-details" class="step" aria-labelledby="details-heading" hidden>
+      <h1 id="details-heading" tabindex="-1">Your details</h1>
+      <p>Walgreens uses these to let you know when your prints are ready.</p>
+
+      <form id="details-form" novalidate>
+        <div class="field-row">
+          <div class="field">
+            <label for="first-name">First name</label>
+            <input id="first-name" name="firstName" autocomplete="given-name" required>
+          </div>
+          <div class="field">
+            <label for="last-name">Last name</label>
+            <input id="last-name" name="lastName" autocomplete="family-name" required>
+          </div>
+        </div>
+        <div class="field">
+          <label for="email">Email</label>
+          <input id="email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" type="tel" autocomplete="tel" required aria-describedby="phone-hint">
+          <p id="phone-hint" class="hint">Include your area code.</p>
+        </div>
+
+        <h2>Review your order</h2>
+        <dl id="summary" class="summary"></dl>
+        <p class="hint">Walgreens confirms tax and the final price.</p>
+
+        <!-- Walgreens requires a control the customer acts on for every order.
+             Replace this label with the exact Terms of Use and Online Privacy &
+             Security Policy copy Walgreens provides. -->
+        <div class="terms">
+          <input id="terms" name="termsAccepted" type="checkbox" required>
+          <label for="terms">I agree to the Walgreens Terms of Use and Online Privacy &amp; Security Policy.</label>
+        </div>
+
+        <div class="actions">
+          <button type="button" data-back="store">Back</button>
+          <button type="submit" id="submit-order" class="primary">Send to Walgreens</button>
+        </div>
+        <p id="details-status" class="status" role="status" aria-live="polite"></p>
+        <div id="details-error" class="error" role="alert"></div>
+      </form>
+    </section>
+
+    <!-- Step 4: confirmation -->
+    <section id="step-done" class="step" aria-labelledby="done-heading" hidden>
+      <h1 id="done-heading" tabindex="-1">Your prints are on their way</h1>
+      <p id="done-pickup"></p>
+      <p id="done-order"></p>
+      <div class="actions">
+        <button type="button" id="check-status" class="primary">Check status</button>
+        <button type="button" id="start-over">Print more photos</button>
+      </div>
+      <p id="order-status" class="status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>

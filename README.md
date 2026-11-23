@@ -16,7 +16,16 @@ The user chooses a person. The app finds their photos with on-device face matchi
 | Replace | The person is swapped for a silhouette, the user's pet or a calm everyday object. |
 | Delete | The photo is removed after a final review, and stays recoverable for 30 days. |
 
-Originals are always kept, every edit is labeled in the photo's metadata, and face data never leaves the phone.
+Originals are always kept, every edit is labeled in the photo's metadata, and face data never leaves the phone. When the user is done, they can print a few favorites for same-day pickup at Walgreens.
+
+## Try the demo
+
+```bash
+cd prototype
+npm start
+```
+
+Then open http://localhost:3000. It runs in mock mode by default, so no real orders are placed. See the [prototype README](prototype/README.md) to connect to Walgreens.
 
 ## Repo contents
 
@@ -24,6 +33,7 @@ Originals are always kept, every edit is labeled in the photo's metadata, and fa
 - [Product plan](docs/01-product-plan.md): landscape, platform constraints, modes, edit labeling and hard cases
 - [Voice and journey](docs/02-voice-and-journey.md): voice principles and the onboarding flow diagram
 - [Partner integrations](docs/11-partner-integrations.md): connecting to print services like CVS, Walgreens and Shutterfly
+- [Packaging as an app](docs/13-packaging-as-an-app.md): steps from the web demo to the App Store
 
 ### Conversation design and copy
 - [Onboarding](docs/03-onboarding.md): the eight-step script and the "How does it work?" explainer
@@ -34,6 +44,10 @@ Originals are always kept, every edit is labeled in the photo's metadata, and fa
 - [Return visits and notifications](docs/08-return-visits.md)
 - [Error and empty states](docs/09-error-states.md)
 - [Accessibility pass](docs/10-accessibility.md)
+- [Print step](docs/12-print-step.md)
+
+### Prototype
+- [Print step demo](prototype/README.md): a working web demo that sends cleaned-up photos to Walgreens, with a mock mode that needs no credentials
 
 ### Agent
 - [Suggestion agent instructions](agent/suggestion-agent-prompt.md)
@@ -45,6 +59,8 @@ Originals are always kept, every edit is labeled in the photo's metadata, and fa
 
 ## Next to write
 
+- [x] A working demo of the print step
 - [ ] A clickable prototype of onboarding and triage
+- [ ] Outreach to CVS and Shutterfly, using the demo and the case study
 - [ ] A usability test plan for the check-in and triage copy
 - [ ] App Store listing copy and the App Privacy details

@@ -18,13 +18,15 @@ Add a "Print" step after the user finishes a batch, so cleaned-up photos go stra
 
 License the cleanup flow as a feature in a partner's photo book or print flow, such as "Clean up this photo book before printing." The pitch rests on what makes the design safe: the shared-children default, edit labels, recoverable originals and on-device face matching.
 
-### 3. Prototype first
+### 3. Prototype first (in progress)
 
-Build the Walgreens print step in the MVP as proof, then use the working demo and the case study to open conversations with CVS and Shutterfly.
+Build the Walgreens print step as proof, then use the working demo and the case study to open conversations with CVS and Shutterfly.
+
+**Status:** the [print step demo](../prototype/README.md) is built. It runs in mock mode with no credentials, and switches to the Walgreens sandbox once an API key and affiliate ID are added. Next: request Walgreens API credentials and run it against the sandbox.
 
 ## What changes in the design
 
-- **Privacy promise.** "Nothing is uploaded" becomes "Photos are uploaded only when you order prints, and only the ones you choose." Update the photo access copy and Card 4 of the explainer.
+- **Privacy promise.** "Nothing is uploaded" becomes "Photos are uploaded only when you order prints, and only the ones you choose." Card 4 of the explainer now says this.
 - **Labels on prints.** Metadata doesn't survive printing. Decide whether edited prints carry any label, such as a line on the back, if the partner supports it.
 - **Safety rules travel with the order.** Photos with shared children keep their protections in the print step, and face data is never sent to the partner.
 

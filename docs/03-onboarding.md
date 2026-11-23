@@ -106,6 +106,6 @@ A four-card carousel opened from the welcome screen. Each card has one idea and 
 
 ### Card 4: Private
 
-"Everything happens on this phone. Nothing is uploaded, and face data is erased after each session."
+"Everything happens on this phone. Photos are uploaded only if you order prints, and face data is erased after each session."
 
 **Buttons:** Next · Get started (on the last card: Get started only)
