@@ -1,0 +1,18 @@
+{
+  "source": "older-couple-closeup.jpg",
+  "mode": "erase",
+  "person": 2,
+  "people_found": 2,
+  "digital_source_type": "http://cv.iptc.org/newscodes/digitalsourcetype/compositeWithTrainedAlgorithmicMedia",
+  "edited_at": "2026-11-23T20:54:15+00:00",
+  "touch_ups": [],
+  "fill": {
+    "method": "crop and fill at model size",
+    "size": 512,
+    "context": 1.6
+  },
+  "models": [
+    "yolov8n-seg (Ultralytics)",
+    "big-lama (LaMa)"
+  ]
+}

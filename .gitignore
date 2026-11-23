@@ -2,3 +2,5 @@ node_modules/
 .env
 .DS_Store
 prototype/dist/
+tools/__pycache__/
+yolov8n-seg.pt

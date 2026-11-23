@@ -21,7 +21,8 @@ The agent starts with the easiest photos: group shots and scenery. Close-up phot
 | [name] is near the edge of the frame | Crop | "They're near the edge, so a crop keeps the moment." |
 | Group photo with friends | Erase | "Everyone else in this photo stays as they are." |
 | Scenery or a simple background behind [name] | Erase | "The background is simple enough to fill in." |
-| Close-up of the two of you | Replace (silhouette) | "Erasing would leave a big gap. A soft silhouette keeps the shape of the moment." |
+| Close-up of the two of you | Erase, with silhouette offered | "I can rebuild the background behind you. If you'd like to keep a trace of the moment, try a soft silhouette instead." |
+| Close-up where your faces overlap | Replace (silhouette) | "Your faces overlap here, so erasing could change how you look. A soft silhouette keeps you exactly as you are." |
 | Only [name] is in the photo | Delete | "This photo is only of [name]. It goes to a final review before anything is deleted." |
 | Video or Live Photo | Fade | "Video editing is coming later, so this one will be faded for now." |
 | The face match is uncertain | Ask | "I'm not sure this is [name]. Is it?" (Yes · No) |

@@ -41,7 +41,7 @@ The agent sorts photos into batches of 20 and suggests a mode for each one, with
 
 ## Proof that it works
 
-An open-source pipeline (YOLOv8 to find people, LaMa to fill in the background) removed one person from real, openly licensed photos of people of different ages, ethnicities and abilities. It worked well on people standing apart from others, and crops left no trace. Close-ups left a blur, which backs up the design rule to suggest a soft silhouette there. Things people held, like a hat, sometimes fell outside the outline, which shows the app needs a touch-up tool. [See the results](demo/README.md).
+An open-source pipeline (YOLOv8 to find people, LaMa to fill in the background) removed one person from real, openly licensed photos of people of different ages, ethnicities and abilities. It worked well on people standing apart from others, and crops left no trace. The first fill left a smear on large gaps. Running the fill model on a crop at its training size fixed that: pavement, pillars and walls now continue through the space where the person stood, even in a close-up. Of four open models tested, LaMa was the only one that didn't invent objects, which matters more than detail in a healing app. Things people held, like a hat, sometimes fell outside the outline, which shows the app needs a touch-up tool. [See the results](demo/README.md).
 
 ## Quality and accessibility
 

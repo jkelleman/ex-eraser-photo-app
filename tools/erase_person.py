@@ -5,7 +5,9 @@ Pipeline
   2. Pick the person: by position (left to right) for this demo. In the app,
      the person is chosen by face in onboarding.
   3. Edit:
-       erase       LaMa fills the person's outline with background
+       erase       LaMa rebuilds the background inside the person's outline,
+                   working on a crop at its native size so lines and
+                   textures carry through the gap
        silhouette  erase, then draw a soft outline where they stood
        crop        crop the frame so the person is outside it
   4. Label: the edited JPEG carries IPTC Digital Source Type
@@ -69,12 +71,57 @@ def hull(mask: np.ndarray) -> np.ndarray:
     return out
 
 
-def erase(image: Image.Image, mask: np.ndarray) -> Image.Image:
+FILL_SIZE = 512  # LaMa was trained near this size; it rebuilds structure best here
+CONTEXT = 1.6    # crop 1.6x the person's size so the model sees what surrounds them
+
+
+def fill_region(mask: np.ndarray, context: float = CONTEXT) -> tuple[int, int, int, int]:
+    """Square box around the masked area with room for surrounding context."""
+    ys, xs = np.nonzero(mask)
+    h, w = mask.shape
+    side = min(int(max(xs.max() - xs.min(), ys.max() - ys.min()) * context), max(w, h))
+    cx, cy = (xs.min() + xs.max()) // 2, (ys.min() + ys.max()) // 2
+    left = int(np.clip(cx - side // 2, 0, max(w - side, 0)))
+    top = int(np.clip(cy - side // 2, 0, max(h - side, 0)))
+    return left, top, min(left + side, w), min(top + side, h)
+
+
+def match_grain(fill: np.ndarray, reference: np.ndarray, known: np.ndarray, seed: int = 7) -> np.ndarray:
+    """Adds film grain to the fill to match the photo, so the patch isn't smoother than its surroundings."""
+    gray = cv2.cvtColor(reference, cv2.COLOR_RGB2GRAY).astype(np.float32)
+    detail = gray - cv2.GaussianBlur(gray, (0, 0), 1.2)
+    sigma = float(np.std(detail[known])) if known.any() else 0.0
+    noise = np.random.default_rng(seed).normal(0, sigma * 0.8, fill.shape[:2]).astype(np.float32)
+    return np.clip(fill.astype(np.float32) + noise[..., None], 0, 255)
+
+
+def erase(image: Image.Image, mask: np.ndarray, size: int = FILL_SIZE, context: float = CONTEXT) -> Image.Image:
+    """Rebuilds the background where the person stood.
+
+    LaMa fills large gaps with a blur when it runs on a full-size photo. Cropping
+    to the person plus their surroundings and filling at LaMa's own working size
+    lets it continue lines, edges and textures (pavement, pillars, railings)
+    through the gap. The fill is then scaled back up, given matching grain and
+    blended in with a soft edge.
+    """
     from simple_lama_inpainting import SimpleLama
 
-    lama = SimpleLama()
-    result = lama(image, Image.fromarray(mask * 255))
-    return result.resize(image.size)
+    src = np.array(image)
+    left, top, right, bottom = fill_region(mask, context)
+    crop, cmask = src[top:bottom, left:right], mask[top:bottom, left:right]
+    scale = min(size / max(crop.shape[:2]), 1.0)
+    small_size = (round(crop.shape[1] * scale), round(crop.shape[0] * scale))
+    small = cv2.resize(crop, small_size, interpolation=cv2.INTER_AREA)
+    small_mask = (cv2.resize(cmask.astype(np.uint8), small_size, interpolation=cv2.INTER_NEAREST) > 0).astype(np.uint8) * 255
+
+    filled = np.array(SimpleLama()(Image.fromarray(small), Image.fromarray(small_mask)))[: small.shape[0], : small.shape[1]]
+    filled = cv2.resize(filled, (crop.shape[1], crop.shape[0]), interpolation=cv2.INTER_CUBIC)
+    filled = match_grain(filled, crop, cmask == 0)
+
+    alpha = cv2.GaussianBlur(grow(cmask, 4).astype(np.float32), (0, 0), 5)[..., None]
+    out = src.astype(np.float32)
+    out[top:bottom, left:right] = crop * (1 - alpha) + filled * alpha
+    return Image.fromarray(np.clip(out, 0, 255).astype(np.uint8))
 
 
 def silhouette(image: Image.Image, mask: np.ndarray, grow_px: int = 18) -> Image.Image:
@@ -179,6 +226,7 @@ def main() -> None:
         "digital_source_type": source_type,
         "edited_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
         "touch_ups": args.touch_up or [],
+        "fill": {"method": "crop and fill at model size", "size": FILL_SIZE, "context": CONTEXT} if args.mode != "crop" else None,
         "models": ["yolov8n-seg (Ultralytics)", "big-lama (LaMa)"] if args.mode != "crop" else ["yolov8n-seg (Ultralytics)"],
     }
     (args.out / f"{stem}.json").write_text(json.dumps(record, indent=2))

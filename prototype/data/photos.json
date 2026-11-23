@@ -43,9 +43,23 @@
   },
   {
     "id": "closeup",
-    "file": "older-couple-closeup-silhouette.jpg",
+    "file": "older-couple-closeup-erase.jpg",
     "before": "older-couple-closeup-before.jpg",
     "title": "Quiet moment",
+    "date": "October 2022",
+    "mode": "Erased",
+    "credit": {
+      "name": "Shixart1985",
+      "license": "CC BY 2.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/2.0/",
+      "sourceUrl": "https://commons.wikimedia.org/wiki/File:Couple_enjoying_quiet_moment_together_indoors.jpg"
+    }
+  },
+  {
+    "id": "closeup-soft",
+    "file": "older-couple-closeup-silhouette.jpg",
+    "before": "older-couple-closeup-before.jpg",
+    "title": "At home",
     "date": "October 2022",
     "mode": "Replaced",
     "replacement": "soft silhouette",
