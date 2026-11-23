@@ -2,8 +2,9 @@
 // Same interface as createWalgreensClient. Stores, prices and order numbers
 // are made up and labeled as demo data. No real orders are placed.
 
-import { randomUUID } from 'node:crypto';
 import { NO_PROMISE_TIME } from './walgreens.js';
+
+const randomUUID = () => globalThis.crypto.randomUUID();
 
 const DEMO_PRODUCTS = [
   { productId: 'DEMO-4X6', productSize: '4x6', productDesc: '4x6 print (demo)', productPrice: '0.45', productGroupId: 'STDPR' },

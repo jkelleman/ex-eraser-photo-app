@@ -20,15 +20,11 @@ Originals are always kept, every edit is labeled in the photo's metadata, and fa
 
 ## Try the demo
 
-The print step demo runs on your computer. It's in mock mode by default, so no real orders are placed.
+There are three ways to try the print step demo, from easiest to most hands-on. All of them run in demo mode, so no real orders are placed.
 
-1. Install [Node.js](https://nodejs.org) (the LTS version).
-2. Download this repo: click the green **Code** button, then **Download ZIP**, and unzip it.
-3. Open Terminal, type `cd ` (with a space), drag the `prototype` folder into the Terminal window, and press Return.
-4. Type `npm start` and press Return.
-5. Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-Press Control + C in Terminal to stop it. More detail, including how to connect to Walgreens, is in the [prototype README](prototype/README.md).
+1. **Open the link.** Nothing to install: [open the hosted demo](https://claude.ai/artifact/5BWzBqsb9aesSUv9AToVLp). It runs entirely in your browser.
+2. **Double-click to run it on your Mac.** Install [Node.js](https://nodejs.org) once, [download this repo](https://github.com/jkelleman/ex-eraser-photo-app/archive/refs/heads/main.zip), unzip it, and double-click **Start Demo** in the `prototype` folder. The demo opens in your browser.
+3. **Use Terminal** if you want to connect to Walgreens or change the code. See the [prototype README](prototype/README.md).
 
 ## Repo contents
 

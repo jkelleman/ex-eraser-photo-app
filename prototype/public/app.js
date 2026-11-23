@@ -19,7 +19,26 @@ const $ = (id) => document.getElementById(id);
 // Escapes text from the server or Walgreens before it goes into markup.
 const esc = (value) => String(value ?? '').replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+// Set when there's no server: the page answers its own API calls with demo
+// data (see local-api.js), so it works from a plain hosted link.
+let localApi = null;
+
+async function connect() {
+  try {
+    const response = await fetch('api/config');
+    if (response.ok && response.headers.get('content-type')?.includes('application/json')) {
+      return await response.json();
+    }
+  } catch {
+    // No server. Fall through to browser-only mode.
+  }
+  const { createLocalApi } = await import('./local-api.js');
+  localApi = createLocalApi();
+  return localApi('api/config');
+}
+
 async function api(path, options = {}) {
+  if (localApi) return localApi(path, options);
   const response = await fetch(path, {
     headers: { 'Content-Type': 'application/json' },
     ...options,
@@ -74,10 +93,11 @@ function renderSizes() {
     container.append(wrapper);
   });
   state.productId = state.products[0]?.productId || null;
-  container.addEventListener('change', (event) => {
-    state.productId = event.target.value;
-  });
 }
+
+$('sizes').addEventListener('change', (event) => {
+  state.productId = event.target.value;
+});
 
 function renderPhotos() {
   const grid = $('photo-grid');
@@ -90,7 +110,7 @@ function renderPhotos() {
     const item = document.createElement('li');
     item.className = 'photo-card';
     item.innerHTML = `
-      <img src="/photos/${esc(photo.file)}" alt="${esc(photo.title)}, ${esc(photo.date)}. ${esc(photo.mode)}.">
+      <img src="photos/${esc(photo.file)}" alt="${esc(photo.title)}, ${esc(photo.date)}. ${esc(photo.mode)}.">
       <div class="photo-body">
         <p class="photo-title">${esc(photo.title)}</p>
         <p class="photo-meta">${esc(photo.date)}</p>
@@ -147,7 +167,7 @@ async function findStores(location) {
   $('store-error').textContent = '';
   $('store-status').textContent = 'Finding stores near you…';
   try {
-    const { stores } = await api('/api/stores', {
+    const { stores } = await api('api/stores', {
       method: 'POST',
       body: {
         ...location,
@@ -272,7 +292,7 @@ $('details-form').addEventListener('submit', async (event) => {
   $('details-status').textContent = 'Sending your photos…';
 
   try {
-    const order = await api('/api/orders', {
+    const order = await api('api/orders', {
       method: 'POST',
       body: {
         customer: {
@@ -311,7 +331,7 @@ $('details-form').addEventListener('submit', async (event) => {
 $('check-status').addEventListener('click', async () => {
   $('order-status').textContent = 'Checking…';
   try {
-    const status = await api(`/api/orders/${encodeURIComponent(state.orderId)}/status`);
+    const status = await api(`api/orders/${encodeURIComponent(state.orderId)}/status`);
     $('order-status').textContent = `Status: ${status.label}.`;
   } catch (error) {
     $('order-status').textContent = error.message;
@@ -319,7 +339,17 @@ $('check-status').addEventListener('click', async () => {
 });
 
 $('start-over').addEventListener('click', () => {
-  window.location.reload();
+  state.selected.clear();
+  state.stores = [];
+  state.store = null;
+  state.orderId = null;
+  $('details-form').reset();
+  for (const input of document.querySelectorAll('[aria-invalid]')) input.removeAttribute('aria-invalid');
+  for (const id of ['store-status', 'details-error', 'order-status']) $(id).textContent = '';
+  $('store-fieldset').hidden = true;
+  renderSizes();
+  renderPhotos();
+  showStep('photos');
 });
 
 for (const button of document.querySelectorAll('[data-back]')) {
@@ -330,16 +360,15 @@ for (const button of document.querySelectorAll('[data-back]')) {
 
 async function init() {
   try {
-    const [config, { photos }, { products }] = await Promise.all([
-      api('/api/config'),
-      api('/api/photos'),
-      api('/api/products'),
-    ]);
+    const config = await connect();
+    const [{ photos }, { products }] = await Promise.all([api('api/photos'), api('api/products')]);
     if (config.mode === 'mock') {
       const banner = $('mode-banner');
       banner.textContent = 'Demo mode: stores and prices are made up, and no real orders are placed.';
       banner.hidden = false;
     }
+    // Hosted pages can't ask for location, and demo stores don't depend on it.
+    if (localApi) $('use-location').hidden = true;
     state.photos = photos;
     state.products = products;
     renderSizes();

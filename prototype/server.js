@@ -149,6 +149,15 @@ export function createApp({ client = createClientFromEnv(), photosPromise = load
         return serveFile(res, PHOTOS_DIR, pathname.slice('/photos/'.length));
       }
 
+      // Shared code and demo data, so the page can also run on its own
+      // (browser-only mode) when there's no server.
+      if (req.method === 'GET' && pathname.startsWith('/lib/')) {
+        return serveFile(res, join(ROOT, 'lib'), pathname.slice('/lib/'.length));
+      }
+      if (req.method === 'GET' && pathname === '/data/photos.json') {
+        return serveFile(res, join(ROOT, 'data'), 'photos.json');
+      }
+
       if (req.method === 'GET') {
         return serveFile(res, PUBLIC_DIR, pathname === '/' ? 'index.html' : pathname.slice(1));
       }

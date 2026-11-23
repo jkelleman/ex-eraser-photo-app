@@ -4,7 +4,8 @@
 // Flow: fetch upload credentials -> upload each image to blob storage ->
 // get products -> search stores -> submit order -> poll order status.
 
-import { randomUUID } from 'node:crypto';
+// Web Crypto works in Node 20+ and in browsers, so this file runs in both.
+const randomUUID = () => globalThis.crypto.randomUUID();
 
 export const BASE_URLS = {
   sandbox: 'https://services-qa.walgreens.com',
@@ -120,7 +121,7 @@ export function createWalgreensClient({
         method: 'PUT',
         headers: {
           'Content-Type': 'image/jpeg',
-          'Content-Length': String(bytes.length),
+          'Content-Length': String(bytes.length ?? bytes.byteLength),
           'x-ms-client-request-id': randomUUID(),
           'x-ms-blob-type': 'BlockBlob',
         },
