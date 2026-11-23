@@ -20,12 +20,15 @@ Originals are always kept, every edit is labeled in the photo's metadata, and fa
 
 ## Try the demo
 
-```bash
-cd prototype
-npm start
-```
+The print step demo runs on your computer. It's in mock mode by default, so no real orders are placed.
 
-Then open http://localhost:3000. It runs in mock mode by default, so no real orders are placed. See the [prototype README](prototype/README.md) to connect to Walgreens.
+1. Install [Node.js](https://nodejs.org) (the LTS version).
+2. Download this repo: click the green **Code** button, then **Download ZIP**, and unzip it.
+3. Open Terminal, type `cd ` (with a space), drag the `prototype` folder into the Terminal window, and press Return.
+4. Type `npm start` and press Return.
+5. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+Press Control + C in Terminal to stop it. More detail, including how to connect to Walgreens, is in the [prototype README](prototype/README.md).
 
 ## Repo contents
 

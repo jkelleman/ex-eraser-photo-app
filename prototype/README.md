@@ -10,16 +10,24 @@ The demo is a small web app. The real product would be a native iPhone app (see 
 
 The demo photos are illustrations with no people in them. Dark mode is supported too ([screenshot](screenshots/4-done-dark.png)).
 
-## Run it
+## Run it on your Mac
 
-You need [Node.js](https://nodejs.org) 18 or newer. There's nothing to install.
+You only need to do steps 1 and 2 once.
+
+1. **Install Node.js.** Go to [nodejs.org](https://nodejs.org), download the LTS installer for macOS, and run it.
+2. **Download the code.** On the repo's GitHub page, click the green **Code** button, then **Download ZIP**. Double-click the ZIP file in your Downloads folder to unzip it.
+3. **Open Terminal.** Press Command + Space, type "Terminal" and press Return.
+4. **Go to the prototype folder.** In Terminal, type `cd` followed by a space. Then, in Finder, open the unzipped folder and drag the `prototype` folder into the Terminal window. Its path appears after `cd`. Press Return.
+5. **Start the demo.** Type `npm start` and press Return. You'll see "Print demo running at http://localhost:3000".
+6. **Open the demo.** In your browser, go to [http://localhost:3000](http://localhost:3000).
+7. **Stop the demo** when you're done: click the Terminal window and press Control + C.
+
+If you're comfortable with Terminal already, the short version is:
 
 ```bash
 cd prototype
 npm start
 ```
-
-Open http://localhost:3000.
 
 By default the demo runs in **mock mode**: stores, prices and order numbers are made up, and no real orders are placed. A banner at the top says so.
 
