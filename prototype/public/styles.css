@@ -13,20 +13,20 @@
 @font-face { font-family: "Figtree"; src: url("fonts/figtree-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-display: swap; }
 
 :root {
-  --mist: #edf1f7;
-  --mist-deep: #d5dcea;
+  --mist: #f3f3f4;
+  --mist-deep: #e2e2e5;
   --paper: #ffffff;
-  --ink: #1b2333;
-  --ink-quiet: #4f5a6c;
-  --line: #c3cbd9;
-  --plum: #5a3e8a;
-  --plum-strong: #47306f;
-  --plum-soft: #ebe4f5;
-  --apricot: #f2a86f;
+  --ink: #000000;
+  --ink-quiet: #55555c;
+  --line: #cfcfd4;
+  --accent: #d4006f;
+  --accent-strong: #a8005a;
+  --accent-soft: #ffe4f2;
+  --spark: #ff2d95;
   --error: #a3262e;
-  --focus: #1f5fd6;
-  --print-shadow: 0 1px 1px rgba(27, 35, 51, 0.08), 0 6px 14px -6px rgba(27, 35, 51, 0.28);
-  --print-shadow-lift: 0 2px 3px rgba(27, 35, 51, 0.1), 0 18px 30px -12px rgba(71, 48, 111, 0.45);
+  --focus: #000000;
+  --print-shadow: 0 1px 1px rgba(0, 0, 0, 0.08), 0 6px 14px -6px rgba(0, 0, 0, 0.26);
+  --print-shadow-lift: 0 2px 3px rgba(0, 0, 0, 0.1), 0 18px 30px -12px rgba(255, 45, 149, 0.45);
   --font-body: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
   --font-display: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
   color-scheme: light;
@@ -35,36 +35,36 @@
 /* Dark theme: same idea at night. Follows the system, or a hosted viewer's data-theme. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
-    --mist: #141821;
-    --mist-deep: #2a3140;
-    --paper: #1e2430;
-    --ink: #eef1f6;
-    --ink-quiet: #b5bdcb;
-    --line: #3d4658;
-    --plum: #c9b3f0;
-    --plum-strong: #ddd0f7;
-    --plum-soft: #2e2542;
+    --mist: #121214;
+    --mist-deep: #2a2a2e;
+    --paper: #1c1c1f;
+    --ink: #ffffff;
+    --ink-quiet: #b9b9c0;
+    --line: #3a3a40;
+    --accent: #ff4fa7;
+    --accent-strong: #ff8cc6;
+    --accent-soft: #3d1029;
     --error: #ff9aa0;
-    --focus: #8db4ff;
+    --focus: #ffffff;
     --print-shadow: 0 1px 1px rgba(0, 0, 0, 0.4), 0 8px 18px -8px rgba(0, 0, 0, 0.7);
-    --print-shadow-lift: 0 2px 3px rgba(0, 0, 0, 0.4), 0 18px 30px -12px rgba(0, 0, 0, 0.8);
+    --print-shadow-lift: 0 2px 3px rgba(0, 0, 0, 0.4), 0 18px 30px -12px rgba(255, 45, 149, 0.4);
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
-  --mist: #141821;
-  --mist-deep: #2a3140;
-  --paper: #1e2430;
-  --ink: #eef1f6;
-  --ink-quiet: #b5bdcb;
-  --line: #3d4658;
-  --plum: #c9b3f0;
-  --plum-strong: #ddd0f7;
-  --plum-soft: #2e2542;
+  --mist: #121214;
+  --mist-deep: #2a2a2e;
+  --paper: #1c1c1f;
+  --ink: #ffffff;
+  --ink-quiet: #b9b9c0;
+  --line: #3a3a40;
+  --accent: #ff4fa7;
+  --accent-strong: #ff8cc6;
+  --accent-soft: #3d1029;
   --error: #ff9aa0;
-  --focus: #8db4ff;
+  --focus: #ffffff;
   --print-shadow: 0 1px 1px rgba(0, 0, 0, 0.4), 0 8px 18px -8px rgba(0, 0, 0, 0.7);
-  --print-shadow-lift: 0 2px 3px rgba(0, 0, 0, 0.4), 0 18px 30px -12px rgba(0, 0, 0, 0.8);
+  --print-shadow-lift: 0 2px 3px rgba(0, 0, 0, 0.4), 0 18px 30px -12px rgba(255, 45, 149, 0.4);
   color-scheme: dark;
 }
 
@@ -116,8 +116,8 @@ body {
   margin: 0;
   padding: 0.35rem 0.85rem;
   border-radius: 999px;
-  background: var(--plum-soft);
-  color: var(--plum-strong);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
   font-size: 0.9375rem;
   font-weight: 600;
 }
@@ -153,8 +153,8 @@ body {
   font-size: 0.9375rem;
 }
 .steps li[aria-current="step"] { color: var(--ink); }
-.steps li[aria-current="step"] .step-num { background: var(--plum); border-color: var(--plum); color: var(--paper); }
-.steps li.complete .step-num { border-color: var(--plum); color: var(--plum); }
+.steps li[aria-current="step"] .step-num { background: var(--accent); border-color: var(--accent); color: var(--paper); }
+.steps li.complete .step-num { border-color: var(--accent); color: var(--accent); }
 .steps li.complete .step-num::after { content: "✓"; }
 .steps li.complete .step-num { font-size: 0; }
 .steps li.complete .step-num::after { font-size: 1rem; }
@@ -212,8 +212,8 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .size-shape span { display: block; background: var(--mist-deep); border: 2px solid var(--ink-quiet); border-radius: 2px; }
 .size-name { font-weight: 700; font-size: 1.125rem; display: block; }
 .size-price { color: var(--ink-quiet); font-size: 1rem; display: block; }
-.size:has(input:checked) { border-color: var(--plum); background: var(--plum-soft); }
-.size:has(input:checked) .size-shape span { background: var(--plum); border-color: var(--plum); }
+.size:has(input:checked) { border-color: var(--accent); background: var(--accent-soft); }
+.size:has(input:checked) .size-shape span { background: var(--accent); border-color: var(--accent); }
 .size:has(input:focus-visible) { outline: 3px solid var(--focus); outline-offset: 3px; }
 
 /* Prints: the signature element */
@@ -245,7 +245,7 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 }
 .print-frame img { display: block; width: 100%; height: auto; }
 .prints { align-items: start; }
-.print-card:has(input:checked) .print-frame { transform: translateY(-4px) rotate(-0.6deg); box-shadow: var(--print-shadow-lift); outline: 3px solid var(--plum); outline-offset: 0; }
+.print-card:has(input:checked) .print-frame { transform: translateY(-4px) rotate(-0.6deg); box-shadow: var(--print-shadow-lift); outline: 3px solid var(--accent); outline-offset: 0; }
 .print-card:has(input:focus-visible) .print-frame { outline: 3px solid var(--focus); outline-offset: 4px; }
 
 .check {
@@ -256,12 +256,12 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   height: 36px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.92);
-  border: 2px solid #4f5a6c;
+  border: 2px solid var(--ink-quiet);
   display: grid;
   place-items: center;
 }
 .check svg { width: 20px; height: 20px; opacity: 0; }
-.print-card:has(input:checked) .check { background: #5a3e8a; border-color: #5a3e8a; }
+.print-card:has(input:checked) .check { background: var(--accent); border-color: var(--accent); }
 .print-card:has(input:checked) .check svg { opacity: 1; }
 
 .before-badge {
@@ -270,7 +270,7 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   top: 18px;
   padding: 0.2rem 0.65rem;
   border-radius: 999px;
-  background: rgba(27, 35, 51, 0.85);
+  background: rgba(0, 0, 0, 0.82);
   color: #fff;
   font-size: 0.875rem;
   font-weight: 700;
@@ -288,11 +288,11 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   font-weight: 600;
   cursor: pointer;
 }
-.before-toggle[aria-pressed="true"] { border-color: var(--plum); background: var(--plum-soft); color: var(--plum-strong); }
+.before-toggle[aria-pressed="true"] { border-color: var(--accent); background: var(--accent-soft); color: var(--accent-strong); }
 
 .credits { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid var(--line); color: var(--ink-quiet); font-size: 1rem; max-width: 70ch; }
 .credits h2 { font-size: 1.125rem; color: var(--ink); margin: 0 0 0.5rem; }
-.credits a { color: var(--plum); }
+.credits a { color: var(--accent); }
 .credits ul { padding-left: 1.25rem; margin: 0.5rem 0 0; }
 .credits li { margin-bottom: 0.25rem; }
 
@@ -304,8 +304,8 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   margin-top: 0.5rem;
   padding: 0.3rem 0.75rem 0.3rem 0.55rem;
   border-radius: 999px;
-  background: var(--plum-soft);
-  color: var(--plum-strong);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
   font-size: 0.9375rem;
   font-weight: 700;
 }
@@ -313,7 +313,7 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .print-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; margin-top: 0.75rem; }
 .print-title { font-weight: 700; }
 .print-date { color: var(--ink-quiet); font-size: 1rem; white-space: nowrap; }
-.print-action { display: block; color: var(--plum); font-weight: 600; font-size: 1rem; margin-top: 0.15rem; }
+.print-action { display: block; color: var(--accent); font-weight: 600; font-size: 1rem; margin-top: 0.15rem; }
 .print-card:has(input:checked) .print-action { color: var(--ink-quiet); }
 
 .stepper {
@@ -344,11 +344,11 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   align-items: flex-start;
   margin-top: 2rem;
   padding: 1rem 1.25rem;
-  border-left: 4px solid var(--plum);
+  border-left: 4px solid var(--accent);
   background: var(--paper);
   border-radius: 0 10px 10px 0;
 }
-.reassure svg { width: 26px; height: 26px; flex: none; color: var(--plum); margin-top: 0.1rem; }
+.reassure svg { width: 26px; height: 26px; flex: none; color: var(--accent); margin-top: 0.1rem; }
 .reassure p { margin: 0; }
 
 /* Buttons */
@@ -369,10 +369,10 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   cursor: pointer;
 }
 .btn svg { width: 22px; height: 22px; }
-.btn-primary { background: var(--plum); color: var(--paper); }
-.btn-primary:hover { background: var(--plum-strong); }
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: var(--accent); }
 .btn-secondary { background: var(--paper); color: var(--ink); border-color: var(--line); }
-.btn-secondary:hover { border-color: var(--plum); }
+.btn-secondary:hover { border-color: var(--accent); }
 .btn-quiet { background: transparent; color: var(--ink); border-color: var(--line); }
 .btn:disabled { opacity: 0.6; cursor: progress; }
 
@@ -392,21 +392,21 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   border-radius: 12px;
   cursor: pointer;
 }
-.store input { width: 24px; height: 24px; margin: 0.15rem 0 0; accent-color: var(--plum); }
+.store input { width: 24px; height: 24px; margin: 0.15rem 0 0; accent-color: var(--accent); }
 .store-address { font-weight: 700; display: block; }
 .store-meta { color: var(--ink-quiet); font-size: 1rem; display: block; }
 .store-ready {
   justify-self: end;
   padding: 0.25rem 0.7rem;
   border-radius: 999px;
-  background: var(--plum-soft);
-  color: var(--plum-strong);
+  background: var(--accent-soft);
+  color: var(--accent-strong);
   font-size: 0.9375rem;
   font-weight: 600;
   white-space: nowrap;
 }
 .store-ready.later { background: var(--mist); color: var(--ink-quiet); }
-.store:has(input:checked) { border-color: var(--plum); box-shadow: inset 0 0 0 1px var(--plum); }
+.store:has(input:checked) { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
 
 /* Form */
 
@@ -433,7 +433,7 @@ input[aria-invalid="true"] { border-color: var(--error) !important; }
 .review-list dd { margin: 0; font-weight: 600; }
 
 .terms { display: flex; gap: 0.85rem; align-items: flex-start; margin-top: 1.5rem; }
-.terms input { width: 26px; height: 26px; margin: 0.1rem 0 0; flex: none; accent-color: var(--plum); }
+.terms input { width: 26px; height: 26px; margin: 0.1rem 0 0; flex: none; accent-color: var(--accent); }
 .terms label { font-weight: 400; margin: 0; }
 
 /* Done */
@@ -467,8 +467,8 @@ input[aria-invalid="true"] { border-color: var(--error) !important; }
   background: var(--line);
 }
 .track li.done, .track li.current { color: var(--ink); font-weight: 600; }
-.track li.done::before { background: var(--plum); border-color: var(--plum); }
-.track li.current::before { border-color: var(--plum); box-shadow: inset 0 0 0 4px var(--paper); background: var(--plum); }
+.track li.done::before { background: var(--accent); border-color: var(--accent); }
+.track li.current::before { border-color: var(--accent); box-shadow: inset 0 0 0 4px var(--paper); background: var(--accent); }
 
 /* Order summary */
 
@@ -494,7 +494,7 @@ input[aria-invalid="true"] { border-color: var(--error) !important; }
   height: 22px;
   padding: 0 5px;
   border-radius: 11px;
-  background: var(--plum);
+  background: var(--accent);
   color: var(--paper);
   font-size: 0.8125rem;
   font-weight: 700;
@@ -534,7 +534,7 @@ input[aria-invalid="true"] { border-color: var(--error) !important; }
     border-radius: 16px 16px 0 0;
     border-width: 1px 0 0;
     padding: 0.75rem clamp(1rem, 4vw, 2.5rem);
-    box-shadow: 0 -8px 24px -12px rgba(27, 35, 51, 0.35);
+    box-shadow: 0 -8px 24px -12px rgba(0, 0, 0, 0.3);
     display: flex;
     align-items: center;
     justify-content: space-between;
