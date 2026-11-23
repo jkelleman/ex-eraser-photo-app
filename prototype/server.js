@@ -133,7 +133,7 @@ export function createApp({ client = createClientFromEnv(), photosPromise = load
           storeNum: request.storeNum,
           promiseTime: request.promiseTime,
           items: [{ productId: request.productId, images }],
-          affNotes: 'ex-eraser print demo',
+          affNotes: 'Ex-Eraser Photo App print demo',
         });
         return sendJson(res, 201, { ...order, pickupLabel: formatPromiseTime(request.promiseTime) });
       }

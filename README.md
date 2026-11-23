@@ -1,8 +1,8 @@
-# Ex-eraser photo app
+# Ex-Eraser Photo App
 
 A photo app that helps people keep their good memories after a breakup while seeing less of their ex. The MVP is a portfolio concept for conversation design and agentic AI. The final version is planned as an App Store product.
 
-The app name is a placeholder, shown in copy as `[App]`. The tone is healing: calm, steady and neutral about the person.
+The tone is healing: calm, steady and neutral about the person.
 
 ## What it does
 

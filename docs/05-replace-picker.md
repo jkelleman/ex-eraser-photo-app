@@ -25,7 +25,7 @@ Objects stay calm and kind, in keeping with the healing tone: a bouquet of flowe
 
 *Object:* "Choose something to place in the scene."
 
-*Help line under the choices:* "[App] never adds people to photos, to keep your memories honest and respect everyone's privacy."
+*Help line under the choices:* "Ex-Eraser Photo App never adds people to photos, to keep your memories honest and respect everyone's privacy."
 
 *Preview:* "Here's how it looks. You can try again or choose something else."
 

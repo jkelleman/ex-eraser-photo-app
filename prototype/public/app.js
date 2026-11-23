@@ -44,7 +44,7 @@ function showStep(name) {
   }
   const heading = $(`${name}-heading`);
   heading.focus();
-  document.title = `${heading.textContent} · [App] print demo`;
+  document.title = `${heading.textContent} · Ex-Eraser Photo App print demo`;
 }
 
 function selectedProduct() {

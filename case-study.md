@@ -1,4 +1,4 @@
-# Case study: [App]
+# Case study: Ex-Eraser Photo App
 
 Conversation design for a photo app that helps people keep their good memories after a breakup while seeing less of their ex. This is a portfolio concept, with an App Store release planned.
 

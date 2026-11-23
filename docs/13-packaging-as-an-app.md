@@ -31,7 +31,7 @@ The web demo stays useful as a partner demo and a design reference. The flows, c
   - **Core ML** for on-device erasing and filling
   - **Core Location** for finding nearby stores
 - Write the permission messages iOS shows. These are short strings in the app's settings file (Info.plist), and they're copy you write:
-  - Photo library: "To find photos of the person you choose, [App] needs access to your library. Face matching happens only on this phone."
+  - Photo library: "To find photos of the person you choose, Ex-Eraser Photo App needs access to your library. Face matching happens only on this phone."
   - Location: "Your location is used only to find a nearby Walgreens for your prints."
 - Add a privacy manifest file (`PrivacyInfo.xcprivacy`) that lists what data the app uses and why.
 - Keep the Walgreens API key on a small server, like the demo's `server.js`, so it isn't stored inside the app.
@@ -48,7 +48,7 @@ The web demo stays useful as a partner demo and a design reference. The flows, c
 
 In App Store Connect, Apple's site for managing apps, you'll fill in:
 
-- **Name and subtitle.** Pick a final name and check that it's free on the App Store.
+- **Name and subtitle.** The name is Ex-Eraser Photo App. Check that it's free on the App Store before you submit.
 - **Description and keywords.**
 - **Screenshots** for the required iPhone sizes, and an **app icon**.
 - **Category:** Photo & Video.

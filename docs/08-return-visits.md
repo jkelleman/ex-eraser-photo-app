@@ -31,7 +31,7 @@ Users can add dates that might be difficult, like an anniversary or a birthday. 
 | Rule | Detail |
 | --- | --- |
 | Off by default | The user turns them on in Settings |
-| Never names the person | "You have a few new photos to review in [App]." |
+| Never names the person | "You have a few new photos to review in Ex-Eraser Photo App." |
 | Never shows a photo | No thumbnails or rich previews |
 | At most once a week | Batches new photos into one reminder |
 | Hard-date check-ins | Only for dates the user added |

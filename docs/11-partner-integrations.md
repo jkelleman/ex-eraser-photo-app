@@ -2,7 +2,7 @@
 
 ## Pitch
 
-[App] helps people keep their good memories after a breakup while seeing less of their ex. Before someone orders prints or builds a photo book, [App] finds the ex in their photos and fades, crops, erases or replaces them. Everything runs on the user's phone, originals are kept, and every edit is labeled.
+Ex-Eraser Photo App helps people keep their good memories after a breakup while seeing less of their ex. Before someone orders prints or builds a photo book, Ex-Eraser Photo App finds the ex in their photos and fades, crops, erases or replaces them. Everything runs on the user's phone, originals are kept, and every edit is labeled.
 
 ## Three ways to connect
 

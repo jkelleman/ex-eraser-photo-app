@@ -4,7 +4,7 @@ Every error message says what happened, why it matters, and what the user can do
 
 | Situation | Message | Buttons |
 | --- | --- | --- |
-| Limited photo access | "You've shared some of your photos with [App]. To find every photo of [name], allow access to your full library." | Open Settings · Keep using selected photos |
+| Limited photo access | "You've shared some of your photos with Ex-Eraser Photo App. To find every photo of [name], allow access to your full library." | Open Settings · Keep using selected photos |
 | No face groups yet | "Your phone is still learning the faces in your library. This can take a while after a big import. Check back a little later." | Remind me later · Choose photos myself |
 | The person isn't listed | "You can pick a few photos of them yourself, and I'll look for more like those." | Choose photos |
 | No other matches found | "I couldn't find any other photos of [name]. If some are in an album or a Shared Library, you can add them yourself." | Add photos · Continue |

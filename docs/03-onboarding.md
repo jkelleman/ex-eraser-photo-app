@@ -6,7 +6,7 @@ App copy is in quotes. Buttons are listed after each step. Notes on logic are in
 
 ### 1. Welcome
 
-"Welcome to [App]. This is a space to keep your good memories while seeing less of someone you're moving on from."
+"Welcome to Ex-Eraser Photo App. This is a space to keep your good memories while seeing less of someone you're moving on from."
 
 "You're in control of every change, and your original photos are always kept safe."
 
@@ -14,7 +14,7 @@ App copy is in quotes. Buttons are listed after each step. Notes on logic are in
 
 ### 2. Photo access
 
-"To find photos of this person, [App] needs access to your photo library."
+"To find photos of this person, Ex-Eraser Photo App needs access to your photo library."
 
 "Face matching happens only on this phone. Face data is never uploaded, never shared, and is erased when you finish each session."
 
@@ -56,7 +56,7 @@ App copy is in quotes. Buttons are listed after each step. Notes on logic are in
 
 ### 6. The options
 
-"Here's what [App] can do. You can mix these, photo by photo."
+"Here's what Ex-Eraser Photo App can do. You can mix these, photo by photo."
 
 - **Fade.** Their photos stop appearing in Memories, widgets and slideshows. Nothing is edited.
 - **Crop.** Trim them out of the frame.
@@ -94,7 +94,7 @@ A four-card carousel opened from the welcome screen. Each card has one idea and 
 
 ### Card 1: Find
 
-"You choose the person. [App] finds their photos using face matching on this phone."
+"You choose the person. Ex-Eraser Photo App finds their photos using face matching on this phone."
 
 ### Card 2: Choose
 
