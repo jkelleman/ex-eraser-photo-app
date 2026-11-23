@@ -1,10 +1,10 @@
 [
-  { "id": "beach", "file": "beach.jpg", "title": "Beach day", "date": "June 2023", "mode": "Erased" },
-  { "id": "mountains", "file": "mountains.jpg", "title": "Mountain trail", "date": "August 2023", "mode": "Cropped" },
-  { "id": "city", "file": "city.jpg", "title": "City lights", "date": "October 2023", "mode": "Erased" },
-  { "id": "lake", "file": "lake.jpg", "title": "Lake house", "date": "July 2023", "mode": "Replaced" },
-  { "id": "garden", "file": "garden.jpg", "title": "Garden party", "date": "May 2024", "mode": "Erased" },
-  { "id": "sunset", "file": "sunset.jpg", "title": "Sunset walk", "date": "September 2023", "mode": "Cropped" },
-  { "id": "snow", "file": "snow.jpg", "title": "Snow day", "date": "January 2024", "mode": "Faded" },
-  { "id": "park", "file": "park.jpg", "title": "Day at the park", "date": "April 2024", "mode": "Faded" }
+  {"id": "beach", "file": "beach.jpg", "title": "Beach day", "date": "June 2023", "mode": "Erased"},
+  {"id": "mountains", "file": "mountains.jpg", "title": "Mountain trail", "date": "August 2023", "mode": "Cropped"},
+  {"id": "city", "file": "city.jpg", "title": "City lights", "date": "October 2023", "mode": "Erased"},
+  {"id": "lake", "file": "lake.jpg", "title": "Lake house", "date": "July 2023", "mode": "Replaced", "replacement": "silhouette"},
+  {"id": "garden", "file": "garden.jpg", "title": "Garden party", "date": "May 2024", "mode": "Erased"},
+  {"id": "sunset", "file": "sunset.jpg", "title": "Sunset walk", "date": "September 2023", "mode": "Cropped"},
+  {"id": "snow", "file": "snow.jpg", "title": "Snow day", "date": "January 2024", "mode": "Faded"},
+  {"id": "park", "file": "park.jpg", "title": "Day at the park", "date": "April 2024", "mode": "Faded"}
 ]

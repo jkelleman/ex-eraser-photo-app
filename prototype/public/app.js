@@ -122,7 +122,7 @@ function updateOrder() {
   $('order-thumbs').innerHTML = cartItems()
     .map(({ id, qty }) => {
       const photo = photosById.get(id);
-      return `<li><img src="photos/${esc(photo.file)}" alt=""><span>${qty}</span></li>`;
+      return `<li title="${esc(photo.title)}: ${esc(treatmentLabel(photo))}"><img src="photos/${esc(photo.file)}" alt=""><span>${qty}</span></li>`;
     })
     .join('');
 
@@ -130,6 +130,7 @@ function updateOrder() {
     ['Photos', state.selected.size ? String(state.selected.size) : 'None yet'],
     ['Prints', prints ? `${prints} × ${esc(sizeLabel(product?.productSize))}` : 'None yet'],
   ];
+  if (state.selected.size) lines.push(['Edits', esc(editsSummary())]);
   if (state.store) {
     lines.push(['Pickup', `${esc(state.store.street)}`]);
     lines.push(['Ready', esc(friendlyPickup(state.store.pickupLabel))]);
@@ -173,6 +174,31 @@ $('sizes').addEventListener('change', (event) => {
   updateOrder();
 });
 
+// How each photo was edited, in plain words, with a matching icon.
+const ICONS = {
+  Erased: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 4.5l5 5-8.5 8.5H6l-2.5-2.5z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/><path d="M9 10l5 5M11 18h9" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  Cropped: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 2v14a2 2 0 002 2h14M2 6h14a2 2 0 012 2v14" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  Replaced: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h13l-3-3M20 16H7l3 3" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+};
+
+function treatmentLabel(photo) {
+  if (photo.mode === 'Erased') return 'Erased from photo';
+  if (photo.mode === 'Cropped') return 'Cropped out';
+  if (photo.mode === 'Replaced') return photo.replacement ? `Replaced with a ${photo.replacement}` : 'Replaced';
+  return photo.mode;
+}
+
+// "1 erased, 1 replaced" for the chosen photos.
+function editsSummary() {
+  const photosById = new Map(state.photos.map((photo) => [photo.id, photo]));
+  const counts = new Map();
+  for (const id of state.selected.keys()) {
+    const mode = photosById.get(id)?.mode;
+    counts.set(mode, (counts.get(mode) || 0) + 1);
+  }
+  return [...counts].map(([mode, n]) => `${n} ${String(mode).toLowerCase()}`).join(', ');
+}
+
 const CHECK_SVG = '<svg viewBox="0 0 20 20" aria-hidden="true"><path d="M4.5 10.5l3.5 3.5 7.5-8" fill="none" stroke="#fff" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
 function renderPhotos() {
@@ -189,14 +215,14 @@ function renderPhotos() {
         <span class="print-frame">
           <img src="photos/${esc(photo.file)}" alt="">
           <span class="check" aria-hidden="true">${CHECK_SVG}</span>
-          <span class="mode-tag" aria-hidden="true">${esc(photo.mode)}</span>
         </span>
         <span class="print-meta">
           <span class="print-title">${esc(photo.title)}</span>
           <span class="print-date">${esc(photo.date)}</span>
         </span>
+        <span class="treatment" aria-hidden="true">${ICONS[photo.mode] || ''}${esc(treatmentLabel(photo))}</span>
         <span class="print-action" aria-hidden="true">Add to order</span>
-        <span class="visually-hidden" id="${esc(checkboxId)}-info">${esc(photo.mode)} photo, ${esc(photo.date)}. Photo ${index + 1} of ${printable.length}.</span>
+        <span class="visually-hidden" id="${esc(checkboxId)}-info">${esc(treatmentLabel(photo))}. ${esc(photo.date)}. Photo ${index + 1} of ${printable.length}.</span>
       </label>
       <div class="stepper" hidden>
         <span class="stepper-label" id="${esc(checkboxId)}-copies">Copies</span>
@@ -335,6 +361,7 @@ function renderSummary() {
   $('summary').innerHTML = `
     <dt>Prints</dt><dd>${prints} × ${esc(sizeLabel(product?.productSize))}</dd>
     <dt>Photos</dt><dd>${state.selected.size}</dd>
+    <dt>Edits</dt><dd>${esc(editsSummary())}</dd>
     <dt>Pickup</dt><dd>${esc(state.store.street)}, ${esc(state.store.city)}</dd>
     <dt>Ready</dt><dd>${esc(friendlyPickup(state.store.pickupLabel))}</dd>
     <dt>Subtotal</dt><dd>${money(subtotal())}</dd>`;

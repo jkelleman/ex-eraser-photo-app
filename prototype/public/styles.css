@@ -1,17 +1,16 @@
 /*
   Ex-Eraser Photo App · print step
-  Audience: Millennials and Boomers. Readability first: 18px body,
+  Audience: Millennials and Boomers. Readability first: 18px Figtree body,
   high contrast, 48px targets, words beside every icon, price always visible.
   Idea: every photo looks like a real print (white border, paper shadow).
   Selected prints lift and get a check. Everything else stays quiet.
 */
 
-/* Fonts are bundled (SIL Open Font License, see fonts/), so nothing loads from outside. */
-@font-face { font-family: "Atkinson Hyperlegible Next"; src: url("fonts/atkinson-hyperlegible-next-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
-@font-face { font-family: "Atkinson Hyperlegible Next"; src: url("fonts/atkinson-hyperlegible-next-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
-@font-face { font-family: "Atkinson Hyperlegible Next"; src: url("fonts/atkinson-hyperlegible-next-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
-@font-face { font-family: "Fraunces"; src: url("fonts/fraunces-latin-500-normal.woff2") format("woff2"); font-weight: 500; font-display: swap; }
-@font-face { font-family: "Fraunces"; src: url("fonts/fraunces-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+/* Figtree is bundled (SIL Open Font License, see fonts/), so nothing loads from outside. */
+@font-face { font-family: "Figtree"; src: url("fonts/figtree-latin-400-normal.woff2") format("woff2"); font-weight: 400; font-display: swap; }
+@font-face { font-family: "Figtree"; src: url("fonts/figtree-latin-600-normal.woff2") format("woff2"); font-weight: 600; font-display: swap; }
+@font-face { font-family: "Figtree"; src: url("fonts/figtree-latin-700-normal.woff2") format("woff2"); font-weight: 700; font-display: swap; }
+@font-face { font-family: "Figtree"; src: url("fonts/figtree-latin-800-normal.woff2") format("woff2"); font-weight: 800; font-display: swap; }
 
 :root {
   --mist: #edf1f7;
@@ -28,8 +27,8 @@
   --focus: #1f5fd6;
   --print-shadow: 0 1px 1px rgba(27, 35, 51, 0.08), 0 6px 14px -6px rgba(27, 35, 51, 0.28);
   --print-shadow-lift: 0 2px 3px rgba(27, 35, 51, 0.1), 0 18px 30px -12px rgba(71, 48, 111, 0.45);
-  --font-body: "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", -apple-system, "Segoe UI", system-ui, sans-serif;
-  --font-display: "Fraunces", Georgia, "Times New Roman", serif;
+  --font-body: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
+  --font-display: "Figtree", -apple-system, "Segoe UI", system-ui, sans-serif;
   color-scheme: light;
 }
 
@@ -111,7 +110,7 @@ body {
 }
 .brand { display: flex; align-items: center; gap: 0.6rem; }
 .brand-mark { width: 40px; height: 40px; flex: none; }
-.brand-name { font-family: var(--font-display); font-weight: 600; font-size: 1.375rem; letter-spacing: -0.01em; }
+.brand-name { font-family: var(--font-display); font-weight: 800; font-size: 1.375rem; letter-spacing: -0.02em; }
 .brand-sub { font-family: var(--font-body); font-weight: 400; font-size: 1rem; color: var(--ink-quiet); letter-spacing: 0; }
 .demo-pill {
   margin: 0;
@@ -172,16 +171,16 @@ body {
 
 h1 {
   font-family: var(--font-display);
-  font-weight: 600;
+  font-weight: 800;
   font-size: clamp(2rem, 3.6vw, 2.75rem);
   line-height: 1.1;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.02em;
   margin: 0 0 0.5rem;
   text-wrap: balance;
 }
 h1:focus { outline: none; }
 .lead { font-size: 1.1875rem; color: var(--ink-quiet); margin: 0 0 1.75rem; max-width: 60ch; }
-.section-title { font-family: var(--font-display); font-weight: 500; font-size: 1.375rem; margin: 2rem 0 1rem; }
+.section-title { font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; margin: 2rem 0 1rem; }
 .note, .hint, .status { color: var(--ink-quiet); }
 .note { max-width: 62ch; }
 .hint { font-size: 1rem; margin: 0.35rem 0 0; }
@@ -189,7 +188,7 @@ h1:focus { outline: none; }
 .error:empty { display: none; }
 .error ul { margin: 0.25rem 0 0; padding-left: 1.25rem; }
 
-legend { font-family: var(--font-display); font-weight: 500; font-size: 1.375rem; padding: 0; margin-bottom: 1rem; }
+legend { font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; padding: 0; margin-bottom: 1rem; }
 fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 
 /* Print sizes: each option shows the print's real proportions */
@@ -264,17 +263,20 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 .print-card:has(input:checked) .check { background: #5a3e8a; border-color: #5a3e8a; }
 .print-card:has(input:checked) .check svg { opacity: 1; }
 
-.mode-tag {
-  position: absolute;
-  left: 18px;
-  bottom: 20px;
-  padding: 0.15rem 0.6rem;
+/* The edit each photo got: shown in words, with an icon, under the print. */
+.treatment {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.5rem;
+  padding: 0.3rem 0.75rem 0.3rem 0.55rem;
   border-radius: 999px;
-  background: rgba(27, 35, 51, 0.78);
-  color: #fff;
-  font-size: 0.875rem;
-  font-weight: 600;
+  background: var(--plum-soft);
+  color: var(--plum-strong);
+  font-size: 0.9375rem;
+  font-weight: 700;
 }
+.treatment svg { width: 18px; height: 18px; flex: none; }
 .print-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 0.5rem; margin-top: 0.75rem; }
 .print-title { font-weight: 700; }
 .print-date { color: var(--ink-quiet); font-size: 1rem; white-space: nowrap; }
@@ -445,7 +447,7 @@ input[aria-invalid="true"] { border-color: var(--error) !important; }
   border: 1px solid var(--line);
   border-radius: 16px;
 }
-.order-title { font-family: var(--font-display); font-weight: 500; font-size: 1.375rem; margin: 0 0 1rem; }
+.order-title { font-family: var(--font-display); font-weight: 700; font-size: 1.375rem; margin: 0 0 1rem; }
 .order-brief { display: none; }
 .order-thumbs { list-style: none; margin: 0 0 1rem; padding: 0; display: flex; flex-wrap: wrap; gap: 0.5rem; }
 .order-thumbs:empty { display: none; }

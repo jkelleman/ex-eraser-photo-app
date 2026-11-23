@@ -115,8 +115,9 @@ Check status          ─────►   GET /api/orders/:id/status ───�
 
 The design aims to be easy for older readers and as polished as a modern photo-printing app.
 
-- **Readable first.** Body text is 18px in Atkinson Hyperlegible, a typeface made for readers with low vision. Headings use Fraunces. Both fonts are bundled in `public/fonts/` under the SIL Open Font License, so nothing loads from outside.
+- **Readable first.** Text is 18px in Figtree, a clean sans-serif with clear numbers, bold for headings. The font is bundled in `public/fonts/` under the SIL Open Font License, so nothing loads from outside.
 - **Photos look like real prints.** Each photo has a white border and a paper shadow. A chosen print lifts, gets a check mark and shows a copies control with large − and + buttons.
+- **Each photo's edit is spelled out.** A label under every print says what was done, such as "Erased from photo", "Cropped out" or "Replaced with a silhouette". The order summary and review list the edits too, like "1 erased, 1 replaced".
 - **Price is always visible.** An order summary stays beside the page on wide screens and becomes a bar at the bottom on phones.
 - **Words beside every icon**, numbered steps, 48px tap targets and plain labels like "Add to order".
 - **Friendly pickup times.** Walgreens' "11-23-2026 3:30 PM" becomes "Today, 3:30 PM".

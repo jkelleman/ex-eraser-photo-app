@@ -21,13 +21,15 @@ After finishing a batch, the user can print a few favorites and pick them up at 
 
 *Size picker legend:* "Print size"
 
+*Each photo's edit (label under the print):* "Erased from photo" · "Cropped out" · "Replaced with a silhouette" (or pet, or object)
+
 *Each photo:* "Add to order", which changes to "In your order" once chosen. A "Copies" control with − and + buttons appears under chosen photos.
 
 *Faded note:* "2 faded photos aren't shown here, since faded photos haven't been edited. You can change them in the vault first."
 
 *Privacy line:* "Your privacy. Only the photos you choose are sent to Walgreens for printing. Face data never leaves your phone."
 
-*Order summary:* "Your order" with photos, prints, pickup, ready time and subtotal. On phones: "4 prints, 5×7 in" and the subtotal. When empty: "No photos chosen."
+*Order summary:* "Your order" with photos, prints, edits (such as "1 erased, 1 replaced"), pickup, ready time and subtotal. On phones: "4 prints, 5×7 in" and the subtotal. When empty: "No photos chosen."
 
 **Button:** Choose a store
 
