@@ -15,4 +15,4 @@ Disabled And Here is a disability-led stock photo project. The people in its pho
 
 ## Demo video narration
 
-The voice in `video/ex-eraser-demo.mp4` was generated with [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) (voice "Heart"), an open text-to-speech model released under the Apache 2.0 license. Captions are in `video/captions.srt` and `video/captions.vtt`, and are also built into the video as a track you can turn on and off.
+The voice in `video/ex-eraser-demo.mp4` was generated with [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) (voice "Heart"), an open text-to-speech model released under the Apache 2.0 license. Captions are in `video/captions.srt` and `video/captions.vtt`. `video/ex-eraser-demo-captions.mp4` has them built in as a track you can turn on and off.
