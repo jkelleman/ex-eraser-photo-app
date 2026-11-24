@@ -1,0 +1,38 @@
+1
+00:00:00,300 --> 00:00:02,292
+Meet Ex-Eraser Photo App.
+
+2
+00:00:02,700 --> 00:00:05,400
+Pick a photo, and the AI finds your ex.
+
+3
+00:00:05,500 --> 00:00:07,728
+Then it rebuilds what was behind them.
+
+4
+00:00:09,700 --> 00:00:11,558
+It even works in close-ups.
+
+5
+00:00:12,200 --> 00:00:15,308
+He's gone, and her face
+stays exactly as it was.
+
+6
+00:00:16,700 --> 00:00:19,735
+Everyone else in the photo
+stays just as they were.
+
+7
+00:00:21,200 --> 00:00:23,900
+Prefer something gentler? Crop or soften.
+
+8
+00:00:24,100 --> 00:00:26,003
+Then print the ones you want to keep.
+
+9
+00:00:26,700 --> 00:00:29,300
+Ex-Eraser Photo App. Coming soon.
+

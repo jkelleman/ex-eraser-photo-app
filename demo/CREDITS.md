@@ -12,3 +12,7 @@ All photos are real and openly licensed. Every edited version in this repo was c
 ## A note on the Disabled And Here photo
 
 Disabled And Here is a disability-led stock photo project. The people in its photos gave full consent, and the project asks that its images be used thoughtfully. In this demo, the two friends who stay in the photo (one in a power wheelchair, one with a cane) are kept exactly as they are, and the photo is captioned respectfully. If the photo is used in public marketing for the app, it's worth contacting the project first.
+
+## Demo video narration
+
+The voice in `video/ex-eraser-demo.mp4` was generated with [Kokoro-82M](https://huggingface.co/hexgrad/Kokoro-82M) (voice "Heart"), an open text-to-speech model released under the Apache 2.0 license. Captions are in `video/captions.srt` and `video/captions.vtt`, and are also built into the video as a track you can turn on and off.
